@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 export const Navbar = () => {
   return (
@@ -6,7 +7,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-md-3" data-bs-theme="dark">
         <div className="container">
             
-            <a className="navbar-brand" href="#">MovieApp</a>
+            <Link className="navbar-brand" to={'/'}>MovieApp</Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -14,10 +15,10 @@ export const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ms-auto">
                     <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="#">Movies</a>
+                        <Link className="nav-link" to={'/movies'}>Movies</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">TV Shows</a>
+                        <Link className="nav-link" to={'/tv'}>TV Shows</Link>
                     </li>
                 </ul>
             </div>
