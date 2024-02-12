@@ -1,6 +1,12 @@
 
 export const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <>
+
+        <section className="hero">
+          
+        </section>
+    
+    </>
   )
 }
