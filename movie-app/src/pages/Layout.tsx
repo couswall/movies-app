@@ -6,7 +6,7 @@ export const Layout = () => {
     <>
         <Navbar/>
         
-        <main className="container-fluid">
+        <main >
             <Outlet/>
         </main>
     

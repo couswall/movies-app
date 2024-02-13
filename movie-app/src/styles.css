@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background-color: #03001C;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+h1 {
+    font-size: 60px;
+}
+
+nav {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.hero{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    width: 100%;
+}

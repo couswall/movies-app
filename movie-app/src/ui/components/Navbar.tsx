@@ -4,7 +4,7 @@ export const Navbar = () => {
   return (
     <>
     
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-md-3" data-bs-theme="dark">
+    <nav className="navbar navbar-expand-sm navbar-dark  p-md-3" data-bs-theme="dark">
         <div className="container">
             
             <Link className="navbar-brand" to={'/'}>MovieApp</Link>
