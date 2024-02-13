@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 
+interface FetchResult {
+    data: any, 
+    isLoading: boolean, 
+    hasError: null | string, 
+}
 
-export const useFetch = ( url: string ) => {
 
-    const [ isState, setIsState ] = useState({
+export const useFetch = ( url: string ): FetchResult => {
+
+    const [ isState, setIsState ] = useState <FetchResult>({
         data: null,
         isLoading: true,
         hasError: null,
