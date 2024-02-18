@@ -6,10 +6,12 @@
 
 :root {
     --background-color: #03001C;
+    --font: "DM Sans", sans-serif;
 }
 
 body {
     background-color: var(--background-color);
+    font-family: var(--font);
 }
 
 h1 {
@@ -20,10 +22,3 @@ nav {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.hero{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -2;
-    width: 100%;
-}
