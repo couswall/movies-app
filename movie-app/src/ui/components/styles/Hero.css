@@ -6,3 +6,7 @@
     width: 100%;
     margin-bottom: 80px;
 }
+
+.hero h1 {
+    letter-spacing: 3px;
+}
