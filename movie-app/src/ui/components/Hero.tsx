@@ -4,8 +4,7 @@ import './styles';
 
 export const Hero = () => {
 
-  const apiKey: string = 'c187980b04a74e018b7ed5238b12bbe8';
-  const url: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${ apiKey }&page=1`;
+  const url: string = `https://api.themoviedb.org/3/movie/now_playing`;
  
   const { data, isLoading } = useFetch( url );
 

@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 interface FetchResult {
     data: any, 
     isLoading: boolean, 
-    hasError: null | string, 
+    hasError: null | string | Error, 
 }
 
+const TMBD_TOKEN = import.meta.env.VITE_API_KEY; 
 
 export const useFetch = ( url: string ): FetchResult => {
 
@@ -22,16 +23,26 @@ export const useFetch = ( url: string ): FetchResult => {
             isLoading: true
         });
         
+        try {
+            const resp = await fetch( url + `?api_key=${TMBD_TOKEN}` );
+            const data = await resp.json();
+            
+            // console.log(data);
+            setIsState({
+                data, 
+                isLoading: false,
+                hasError: null,
+            });
+            
+        } catch (error) {
+           
+            setIsState({
+                ...isState,
+                hasError: error instanceof Error ? error.message : String(error)
+            })
+        }
         
-        const resp = await fetch(url);
-        const data = await resp.json();
-        // console.log(data);
 
-        setIsState({
-            data, 
-            isLoading: false,
-            hasError: null,
-        });
     }
 
     useEffect(()=> {

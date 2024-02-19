@@ -1,12 +1,14 @@
 import { Hero } from "../../ui/components"
-import { Carousel } from "../../ui/components/Carousel"
+import { Trending } from "./components";
 
 export const HomePage = () => {
-  
+
+
   return (
     <>
         <Hero/>
-        <Carousel title="Trending"/>
+        <Trending/>
+        
     </>
   )
 }
