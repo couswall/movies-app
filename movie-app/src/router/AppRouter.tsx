@@ -21,6 +21,15 @@ const routesConfig = createBrowserRouter([
                 path: 'tv',
                 element: <TVPage/>
             },
+            {
+                path: 'movie/:movieId',
+                element: <></>
+            },
+            {
+                path: 'tv_serie/:tvId',
+                element: <></>
+            },
+
             // {
             //     path: '/*',
             //     element: <Navigate to={'/'}/>
