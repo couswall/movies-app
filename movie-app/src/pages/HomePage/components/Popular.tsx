@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState } from "react"
 import { useFetch } from "../../../hooks/useFetch";
 import { Carousel } from "../../../ui/components/Carousel";
 
-export const Trending = () => {
-
-    const [ timeFilter, setTimeFilter ] = useState("day");
-    const url: string = `https://api.themoviedb.org/3/trending/all/${timeFilter}`;
+export const Popular = () => {
     
+    const [ typeFilter, setTypeFilter ] = useState("movie")
+    const url = ` https://api.themoviedb.org/3/${typeFilter}/popular`;
+
     const { data } = useFetch( url );
     const { results = [] } = !!data && data; 
 
-  return (
-    <section className="carousel-section mb-5">
+    return (
+    <section className="carousel-section mb-4">
         <div className="container">
-          <h3 className="text-white">Trending</h3>
+          <h3 className="text-white">Popular</h3>
 
           <div className="form-check form-switch d-flex justify-content-end">
             <input 
@@ -21,11 +21,11 @@ export const Trending = () => {
                 type="checkbox" 
                 role="switch" 
                 id="flexSwitchCheckDefault"
-                onChange={() => ( timeFilter === 'day' ) ? setTimeFilter('week') : setTimeFilter('day') }
+                onChange={() => ( typeFilter === 'movie' ) ? setTypeFilter('tv') : setTypeFilter('movie') }
             />
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                <span className={( timeFilter === 'day') ? 'text-secondary' : ''}>Day</span>/
-                <span className={( timeFilter === 'week') ? 'text-secondary' : ''}>Week</span>
+                <span className={( typeFilter === 'movie') ? 'text-secondary' : ''}>Movies</span>/
+                <span className={( typeFilter === 'tv') ? 'text-secondary' : ''}>TV Series</span>
             </label>
           </div>
         
