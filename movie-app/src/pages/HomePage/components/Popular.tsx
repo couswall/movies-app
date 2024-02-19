@@ -11,7 +11,7 @@ export const Popular = () => {
     const { results = [] } = !!data && data; 
 
     return (
-    <section className="carousel-section mb-4">
+    <section className="carousel-section mb-5">
         <div className="container">
           <h3 className="text-white">Popular</h3>
 
