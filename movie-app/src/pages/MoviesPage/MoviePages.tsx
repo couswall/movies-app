@@ -1,6 +1,8 @@
 
 export const MoviesPage = () => {
   return (
-    <div>MoviePage</div>
+    <section className="movies-section">
+      <h2>Explore Movies</h2>
+    </section>
   )
 }
