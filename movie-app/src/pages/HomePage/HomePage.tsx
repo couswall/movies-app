@@ -1,5 +1,5 @@
 import { Hero } from "../../ui/components"
-import { Popular, Trending } from "./components";
+import { Popular, TopRated, Trending } from "./components";
 
 export const HomePage = () => {
 
@@ -9,6 +9,7 @@ export const HomePage = () => {
         <Hero/>
         <Trending/>
         <Popular/>
+        <TopRated/>
         
     </>
   )
