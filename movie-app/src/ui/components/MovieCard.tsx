@@ -18,7 +18,7 @@ export const MovieCard: React.FC<MovieObject> = ({ title, name, poster_path, vot
   }
 
   return (
-    <div className="card-movie" >
+    <div className="card-movie animate__animated animate__fadeIn" >
       <div className="card-img-container position-relative mb-3">
         <img src={`https://image.tmdb.org/t/p/original/${ poster_path}`} alt={ title || name} loading='lazy'/>  
         <div className="raiting-circle position-absolute">
