@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { useFetch } from "../../../hooks/useFetch";
 import { Carousel } from "../../../ui/components/Carousel";
+import { Loading } from "../../../ui/components";
 
 export const Popular = () => {
     
     const [ typeFilter, setTypeFilter ] = useState("movie")
     const url = ` https://api.themoviedb.org/3/${typeFilter}/popular`;
 
-    const { data } = useFetch( url );
-    const { results = [] } = !!data && data; 
+    const { data, isLoading } = useFetch( url );
+    const { results } = !!data && data; 
 
     return (
     <section className="carousel-section mb-5">
@@ -28,8 +29,15 @@ export const Popular = () => {
                 <span className={`text-secondary ${( typeFilter === 'tv') ? 'text-white' : ''}`}>TV Series</span>
             </label>
           </div>
-        
-          <Carousel moviesArray={ results }/>  
+
+
+          {
+            isLoading && <Loading/>
+          }
+
+          {
+            results && <Carousel moviesArray={ results }/>  
+          }
 
         </div>
       </section>
