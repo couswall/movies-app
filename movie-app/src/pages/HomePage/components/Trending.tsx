@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useFetch } from "../../../hooks/useFetch";
 import { Carousel } from "../../../ui/components/Carousel";
+import { Loading } from "../../../ui/components";
 
 export const Trending = () => {
 
     const [ timeFilter, setTimeFilter ] = useState("day");
     const url: string = `https://api.themoviedb.org/3/trending/all/${timeFilter}`;
     
-    const { data } = useFetch( url );
-    const { results = [] } = !!data && data; 
+    const { data, isLoading } = useFetch( url );
+    const { results } = !!data && data; 
 
   return (
     <section className="carousel-section mb-5">
@@ -28,8 +29,14 @@ export const Trending = () => {
                 <span className={`text-secondary ${( timeFilter === 'week') ? 'text-white' : ''}`}>Week</span>
             </label>
           </div>
-        
-          <Carousel moviesArray={ results }/>  
+
+          {
+            isLoading && <Loading/>
+          }
+
+          {
+            results && <Carousel moviesArray={ results }/>
+          }
 
         </div>
       </section>

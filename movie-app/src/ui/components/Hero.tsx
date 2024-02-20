@@ -1,3 +1,4 @@
+import { Loading } from ".";
 import { useFetch } from "../../hooks/useFetch";
 
 import './styles';
@@ -14,13 +15,7 @@ export const Hero = () => {
 
   return (
     <>
-        { isLoading && 
-              <div className="container vh-100 w-100 d-flex justify-content-center align-items-center ">
-                <div className="spinner-border text-light " role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-          }
+        { isLoading && <Loading/> }
 
           {
             ( backdropPath )  && 
