@@ -24,8 +24,8 @@ export const Trending = () => {
                 onChange={() => ( timeFilter === 'day' ) ? setTimeFilter('week') : setTimeFilter('day') }
             />
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                <span className={( timeFilter === 'day') ? 'text-secondary' : ''}>Day</span>/
-                <span className={( timeFilter === 'week') ? 'text-secondary' : ''}>Week</span>
+                <span className={`text-secondary ${( timeFilter === 'day') ? 'text-white' : ''}`}>Day</span>/
+                <span className={`text-secondary ${( timeFilter === 'week') ? 'text-white' : ''}`}>Week</span>
             </label>
           </div>
         

@@ -8,7 +8,7 @@ interface FetchResult {
 
 const TMBD_TOKEN = import.meta.env.VITE_API_KEY; 
 
-export const useFetch = ( url: string ): FetchResult => {
+export const useFetch = ( url: string, page: string = ''): FetchResult => {
 
     const [ isState, setIsState ] = useState <FetchResult>({
         data: null,
@@ -24,7 +24,7 @@ export const useFetch = ( url: string ): FetchResult => {
         });
         
         try {
-            const resp = await fetch( url + `?api_key=${TMBD_TOKEN}` );
+            const resp = await fetch( url + `?api_key=${TMBD_TOKEN}` + page );
             const data = await resp.json();
             
             // console.log(data);
