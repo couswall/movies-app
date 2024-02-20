@@ -24,8 +24,8 @@ export const TopRated = () => {
                 onChange={() => ( typeFilter === 'movie' ) ? setTypeFilter('tv') : setTypeFilter('movie') }
             />
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                <span className={( typeFilter === 'movie') ? 'text-secondary' : ''}>Movies</span>/
-                <span className={( typeFilter === 'tv') ? 'text-secondary' : ''}>TV Series</span>
+                <span className={`text-secondary ${( typeFilter === 'movie') ? 'text-white' : ''}`}>Movies</span>/
+                <span className={`text-secondary ${( typeFilter === 'tv') ? 'text-white' : ''}`}>TV Series</span>
             </label>
           </div>
         
