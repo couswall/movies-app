@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch"
-import { MovieCard, MovieObject } from "../../ui/components";
+import { Loading, MovieCard, MovieObject } from "../../ui/components";
 
 export const MoviesPage = () => {
 
@@ -8,17 +8,21 @@ export const MoviesPage = () => {
   const [nextPage, setNextPage] = useState(1);
   
   const url: string = `https://api.themoviedb.org/3/movie/popular`;
-  const { data } = useFetch( url, `&page=${nextPage}` );
+  const { data, isLoading } = useFetch( url, `&page=${nextPage}` );
   const { results = [] } = !!data && data; 
-
 
   useEffect(() => {
     setAllMovies(( prevMovies: MovieObject[] ) => {
+      //Existing IDs of movies
       const existingIds = new Set(prevMovies.map((movie: MovieObject) => movie.id));
+
+      //Filter of array to include the movies that they are not in the prevMovies
       const newMovies = results.filter((movie: MovieObject) => !existingIds.has(movie.id));
+      
       return [...prevMovies, ...newMovies];
     });
-  },[data, results ]);
+  },[data, nextPage]);
+
 
 
   const loadMoreMovies = () => {
@@ -28,9 +32,22 @@ export const MoviesPage = () => {
   return (
     <section className="movies-section mt-5">
       <div className="container">
-        <h2 className="mb-5">Explore Movies</h2>
+        <h2 className="mb-3">Explore Movies</h2>
+
+        <div className=" mb-4">
+        <select className="form-select" aria-label="Default select example">
+          <option selected>Select Genres</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        </div>
 
         <div className="row">
+          {
+            isLoading && <Loading/>
+          }
+
           {
             data && 
               allMovies.map( (movie: MovieObject ) => ( 

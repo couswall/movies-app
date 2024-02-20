@@ -49,7 +49,7 @@ export const useFetch = ( url: string, page: string = ''): FetchResult => {
      
         getFetch();
     
-    }, [ url ]);
+    }, [ url, page ]);
 
     return{
         data: isState.data,
