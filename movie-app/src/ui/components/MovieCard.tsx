@@ -22,7 +22,7 @@ export const MovieCard: React.FC<MovieObject> = ({ title, name, poster_path, vot
       <div className="card-img-container position-relative mb-3">
         <img src={`https://image.tmdb.org/t/p/original/${ poster_path}`} alt={ title || name} loading='lazy'/>  
         <div className="raiting-circle position-absolute">
-          <span className='fw-bold'>{ (vote_average).toFixed(1) }</span>
+          <span className='fw-bold text-black'>{ (vote_average).toFixed(1) }</span>
         </div>
       </div>
 
