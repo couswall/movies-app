@@ -36,10 +36,6 @@ export const Trending = () => {
               : <Carousel moviesArray={ results }/>
           }
 
-          {/* {
-            results && <Carousel moviesArray={ results }/>
-          } */}
-
         </div>
       </section>
   )
