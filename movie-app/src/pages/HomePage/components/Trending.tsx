@@ -31,12 +31,14 @@ export const Trending = () => {
           </div>
 
           {
-            isLoading && <Loading/>
+            (isLoading )
+              ? <Loading/>
+              : <Carousel moviesArray={ results }/>
           }
 
-          {
+          {/* {
             results && <Carousel moviesArray={ results }/>
-          }
+          } */}
 
         </div>
       </section>
