@@ -17,6 +17,7 @@ export interface MovieObject {
     vote_average: number;
     release_date?: string;
     first_air_date?: string;
+    genre_ids?: number[];
 }
 
 
