@@ -32,11 +32,9 @@ export const Popular = () => {
 
 
           {
-            isLoading && <Loading/>
-          }
-
-          {
-            results && <Carousel moviesArray={ results }/>  
+            isLoading 
+              ? <Loading/>
+              : <Carousel moviesArray={ results }/> 
           }
 
         </div>
