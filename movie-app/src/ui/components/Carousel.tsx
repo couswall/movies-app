@@ -3,25 +3,17 @@ import 'swiper/css';
 import './styles';
 import { Autoplay } from 'swiper/modules';
 import { MovieCard } from '.';
+import { Result } from '../../interfaces';
 
 
 interface CarouselProps {
-  moviesArray?: MovieObject[], 
-}
-
-export interface MovieObject {
-    id: number,
-    title: string;
-    name: string;
-    poster_path: string;
-    vote_average: number;
-    release_date?: string;
-    first_air_date?: string;
-    genre_ids?: number[];
+  moviesArray?: Result[],
+  media_type_props?: string; 
 }
 
 
-export const Carousel: React.FC<CarouselProps> = ({ moviesArray = [] } ) => {
+
+export const Carousel: React.FC<CarouselProps> = ({ moviesArray = [], media_type_props } ) => {
   
   
   return (
@@ -51,9 +43,9 @@ export const Carousel: React.FC<CarouselProps> = ({ moviesArray = [] } ) => {
           }}              
         >
           {
-            moviesArray.map( (movie: MovieObject ) => (
+            moviesArray.map( (movie: Result ) => (
               <SwiperSlide key={ movie.id } >
-                <MovieCard {...movie}/>
+                <MovieCard {...movie} media_type_props={media_type_props} />
               </SwiperSlide>
             ))
           }
