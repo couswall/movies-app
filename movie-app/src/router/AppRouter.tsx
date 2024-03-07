@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { ErrorPage, HomePage, Layout, MoviesPage, TVPage } from "../pages";
+import { ErrorPage, HomePage, Layout, MovieView, MoviesPage, TVPage, TvSerieView } from "../pages";
 
 
 const routesConfig = createBrowserRouter([
@@ -23,11 +23,11 @@ const routesConfig = createBrowserRouter([
             },
             {
                 path: 'movie/:movieId',
-                element: <></>
+                element: <MovieView/>
             },
             {
                 path: 'tv-serie/:tvId',
-                element: <></>
+                element: <TvSerieView/>
             },
 
             // {

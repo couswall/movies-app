@@ -3,3 +3,4 @@ export * from './MoviesPage';
 export * from './TVPage';
 export * from './Layout';
 export * from './ErrorPage';
+export * from './Views';
