@@ -26,7 +26,7 @@ const routesConfig = createBrowserRouter([
                 element: <></>
             },
             {
-                path: 'tv_serie/:tvId',
+                path: 'tv-serie/:tvId',
                 element: <></>
             },
 
