@@ -33,7 +33,7 @@ export const TopRated = () => {
           {
             (isLoading )
               ? <Loading/>
-              : <Carousel moviesArray={ results }/>
+              : <Carousel moviesArray={ results } media_type_props={ typeFilter }/>
           }
 
         </div>

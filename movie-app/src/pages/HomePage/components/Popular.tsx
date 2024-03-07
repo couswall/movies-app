@@ -34,7 +34,7 @@ export const Popular = () => {
           {
             isLoading 
               ? <Loading/>
-              : <Carousel moviesArray={ results }/> 
+              : <Carousel moviesArray={ results } media_type_props={ typeFilter }/> 
           }
 
         </div>
