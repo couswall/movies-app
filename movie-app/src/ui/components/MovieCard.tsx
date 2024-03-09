@@ -21,7 +21,7 @@ export const MovieCard: React.FC<Result & MediaTypeProps > = ({ id,title, name, 
 
 
   return (
-    <Link to={ `${ ( media_type === 'tv' || media_type_props === 'tv' ) ? 'tv-serie' : 'movie'}/${id}`}>
+    <Link to={ `/${ ( media_type === 'tv' || media_type_props === 'tv' ) ? 'tv-serie' : 'movie'}/${id}`}>
       <div className="card-movie animate__animated animate__fadeIn">
         <div className="card-img-container position-relative mb-3">
           <img src={`https://image.tmdb.org/t/p/original/${ poster_path}`} alt={ title || name} loading='lazy'/>  
