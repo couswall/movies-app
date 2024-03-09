@@ -116,7 +116,7 @@ export const MoviesPage = () => {
             {
               ( !!data ) &&  allMovies.map( (movie: MovieObject ) => (
                 <div className="col-xxl-2 col-lg-3 col-md-3 col-sm-6 col-6 mb-5 animate__animated animate__fadeIn" key={ movie.id }>
-                  <MovieCard {...movie}/>
+                  <MovieCard {...movie} media_type_props = 'movie' />
                 </div>
               ))
             }
