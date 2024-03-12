@@ -4,6 +4,8 @@ import { Genre, MovieDetails } from "../../../interfaces/MovieDetails";
 import { useMemo } from "react";
 import { CiPlay1 } from "react-icons/ci";
 
+import '../styles/Details.css'; 
+
 interface MediaDetailsProps {
     data: MovieDetails; 
     isLoading: boolean; 
@@ -27,32 +29,32 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
 
 
     const relaseDate = useMemo( () => {
-        const date = new Date( release_date );
-        const options: Intl.DateTimeFormatOptions = { 
-          year: 'numeric', 
-          month: 'short', 
-          day: 'numeric' 
-        }; 
-        return date.toLocaleDateString('en-US', options);
+      const date = new Date( release_date );
+      const options: Intl.DateTimeFormatOptions = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      }; 
+      return date.toLocaleDateString('en-US', options);
       }, [ movieId, isLoading ])
     
     const runTimeToHours = useMemo ( () => {    
-    const hours = Math.floor( runtime / 60 ); 
-    const minutes = runtime % 60; 
-    return `${hours}h ${minutes}min`
-    }, [ movieId, isLoading ])
-    
-    const realseYear = useMemo( () => {
-    const arrayDate = relaseDate.split(",");
-    return arrayDate[ arrayDate.length - 1 ]; 
+      const hours = Math.floor( runtime / 60 ); 
+      const minutes = runtime % 60; 
+      return `${hours}h ${minutes}min`
+      }, [ movieId, isLoading ])
+      
+      const realseYear = useMemo( () => {
+      const arrayDate = relaseDate.split(",");
+      return arrayDate[ arrayDate.length - 1 ]; 
 
     }, [ movieId, isLoading ]); 
 
   return (
-    <div className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center" 
+    <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center" 
           style={{ 
             filter: !isLoading ? "none" : "blur(10px)",
-            transition: "filter 0.3s",
+            transition: "filter 0.6s",
             height: '90vh'
           }}
     >
@@ -67,19 +69,17 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
                 }}
                 />
       
-      <div className="container position-absolute w-100 h-100 mt-5" 
-      style={{zIndex:'4'}}
-        >
+      <div className="details-section container position-absolute w-100 h-100 mt-5">
           {
             isLoading ? <Loading/>
             :
             <div className="details-wrapper row position-relative gap-4 mb-5">
-              <div className="col-xs-12 col-md-5 col-lg-4 col-xl-4 p-0 overflow-hidden" style={{ borderRadius: '.75rem'}}>
+              <div className="img-container-view col-xs-12 col-md-5 col-lg-4 col-xl-4 p-0 mx-auto overflow-hidden">
                 <img 
+                  className="img-movie-view"
                   src={`https://image.tmdb.org/t/p/original/${ poster_path }`} 
                   alt={ title || original_title} 
                   loading="lazy"
-                  style={{ width: '100%', height: '100%', objectFit:'cover'}}
                 />
               </div>
 
@@ -96,22 +96,22 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
                   }                  
                 </div>
 
-                <div className="d-flex gap-2 mb-3" >
-                  <div className= "p-3 d-flex justify-content-center align-items-center" style={{ backgroundColor: '#000', borderRadius:'50%'}}>
+                <div className="d-flex gap-2 mb-3 details-buttons">
+                  <div className= "circle-details p-3 d-flex justify-content-center align-items-center">
                     <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
                   </div>
-                  <div className="d-flex justify-content-center align-items-center gap-3">
-                    <div className= "p-3" style={{ backgroundColor: '#000', borderRadius:'50%'}}>
-                      <CiPlay1 className='text-white fs-1' />
+                  <div className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white">
+                    <div className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                      <CiPlay1 className="icon"/>
                     </div>
-                    <span className='text-white fs-5'>Watch trailer</span>
+                    <span>Watch trailer</span>
                   </div>
                 
                 </div>
 
                 <div>
                   <h5>Overview</h5>
-                  <p>{ overview }</p>
+                  <p className="overview">{ overview }</p>
 
                   <div className="d-flex gap-3">
                       <p>Status: <span className="fw-lighter">{ status }</span></p>
@@ -134,14 +134,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
             </div>
           </div>
       </div>
-      <div 
-        className="overlay col-12 position-absolute w-100 h-100" 
-        style={{ 
-          background: 'linear-gradient(0deg, rgba(3, 0, 28, 1) 0%, rgba(3, 0, 28, 0.89) 35%, rgba(3, 0, 28, 0.75) 100%)', 
-          top:'0',
-          right:'0'
-          }}>  
-      </div>
-    </div>
+      <div className="overlay-view col-12 position-absolute w-100 h-100"> </div>
+    </section>
   )
 }
