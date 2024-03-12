@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { ScrollRestoration, useParams } from "react-router-dom"
 import { getMediaById } from "../../helpers";
 import { Details } from "./components";
 
@@ -11,7 +11,11 @@ export const MovieView = () => {
   
   return (
 
-    <Details data = { data } isLoading={ isLoading } movieId={ movieId }/>
+    <>
+      <Details data = { data } isLoading={ isLoading } movieId={ movieId }/>
     
+      
+      <ScrollRestoration/>
+    </>
   )
 }
