@@ -4,18 +4,18 @@ import { Autoplay } from 'swiper/modules';
 import { useFetch } from '../../../hooks/useFetch';
 
 import NoPhoto from '../../../../public/assets/avatar.png'; 
+import { CastElement } from '../../../interfaces';
 
+interface CastCarouselProps {
+  movieId: string; 
+}
 
-export const CastCarousel = ({movieId}) => {
+export const CastCarousel: React.FC<CastCarouselProps> = ({movieId}) => {
   const { data, isLoading } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/credits`); 
 
   const { cast = [] } = !!data && data; 
   
-  const castArray = cast.filter( person => person.known_for_department === 'Acting'); 
-
-  console.log( castArray )
-  
-  console.log( castArray )
+  const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
   
   return (
     <>
@@ -45,7 +45,7 @@ export const CastCarousel = ({movieId}) => {
           }}              
         >
           {
-            castArray.map( (person, index) => {
+            castArray.map( (person: CastElement) => {
 
               const profilePhoto = person.profile_path ? 'https://image.tmdb.org/t/p/w185/' + person.profile_path : NoPhoto;
 
