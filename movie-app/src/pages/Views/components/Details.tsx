@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { CiPlay1 } from "react-icons/ci";
 
 import '../styles/Details.css'; 
+import { CastCarousel } from ".";
 
 interface MediaDetailsProps {
     data: MovieDetails; 
@@ -49,6 +50,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
       return arrayDate[ arrayDate.length - 1 ]; 
 
     }, [ movieId, isLoading ]); 
+
 
   return (
     <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center" 
@@ -128,10 +130,8 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
           }
 
           <div className="row">
-            <h3>Cast</h3>
-            <div className="cast-wrapper">
-
-            </div>
+            <h3>Cast</h3>            
+              <CastCarousel movieId = { movieId }/>
           </div>
       </div>
       <div className="overlay-view col-12 position-absolute w-100 h-100"> </div>
