@@ -12,7 +12,7 @@ export const MovieView = () => {
   return (
 
     <>
-      <Details data = { data } isLoading={ isLoading } movieId={ movieId }/>
+      <Details data = { data } isLoading={ isLoading } movieId={ movieId } mediaTypeApi='movie'/>
     
       
       <ScrollRestoration/>
