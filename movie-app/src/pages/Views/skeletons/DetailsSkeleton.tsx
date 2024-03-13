@@ -1,3 +1,4 @@
+import { CastSkeleton } from '.'
 import './styles/CastSkeleton.css'
 
 
@@ -52,6 +53,7 @@ export const DetailsSkeleton = () => {
                 <hr />  
               </div>
             </div>  
+            <CastSkeleton/>
       </div>
       <div className="overlay-view col-12 position-absolute w-100 h-100"> </div>
     </section>
