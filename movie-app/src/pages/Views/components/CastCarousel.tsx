@@ -1,29 +1,19 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
-import { useFetch } from '../../../hooks/useFetch';
 
-import NoPhoto from '../../../../public/assets/avatar.png'; 
+import NoPhoto from '/assets/avatar.png'; 
 import { CastElement } from '../../../interfaces';
-import { CastSkeleton } from '../skeletons';
 
 interface CastCarouselProps {
-  movieId: string; 
+  castArray: CastElement[] 
 }
 
-export const CastCarousel: React.FC<CastCarouselProps> = ({movieId}) => {
-  const { data, isLoading } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/credits`); 
-
-  const { cast = [] } = !!data && data; 
-  
-  const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
-  
+export const CastCarousel: React.FC<CastCarouselProps> = ({castArray}) => {
+   
   return (
     <>
       {
-        ( isLoading ) 
-          ? <CastSkeleton/>
-          :
           <div className="row">
             <h3>Cast</h3>            
             <div className="carousel-wrapper mt-4">
