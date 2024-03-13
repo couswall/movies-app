@@ -5,16 +5,26 @@ import { CiPlay1 } from "react-icons/ci";
 
 import '../styles/Details.css'; 
 import { CastCarousel } from ".";
-import { DetailsSkeleton } from "../skeletons";
+import { CastSkeleton, DetailsSkeleton } from "../skeletons";
+import { useFetch } from "../../../hooks/useFetch";
+import { CastElement } from "../../../interfaces";
 
 interface MediaDetailsProps {
     data: MovieDetails; 
     isLoading: boolean; 
     movieId: string; 
+    mediaTypeApi: string; 
 }
 
-export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId }) => {
+export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi }) => {
 
+  const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
+  
+  const { crew = [], cast = [] } = !!crewData && crewData; 
+  
+  const director = crew.find( (person:CastElement) => person.job === 'Director'); 
+  const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
+  
     const {
         title, 
         original_title, 
@@ -128,11 +138,16 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId 
                         </div>
                         <hr />
                         
-                        <p>Director: <span className="fw-lighter">Realsed</span></p>
+                        {
+                          ( isCastLoading ) ? <></> : <p>Director: <span className="fw-lighter">{ director.name }</span></p>
+                        }
                         <hr />  
                       </div>
-                    </div>    
-                      <CastCarousel movieId = { movieId }/>
+                    </div>  
+                    {
+                      ( isCastLoading ) ? <CastSkeleton/> : <CastCarousel castArray= { castArray }/>
+                    }  
+                      
               </div>
               <div className="overlay-view col-12 position-absolute w-100 h-100 animate__animated animate__fadeIn animate__faster"> </div>
             </section>
