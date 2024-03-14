@@ -1,10 +1,10 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Genre, MovieDetails } from "../../../interfaces/MovieDetails";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { CiPlay1 } from "react-icons/ci";
 
 import '../styles/Details.css'; 
-import { CastCarousel } from ".";
+import { CastCarousel, VideoPopUp,  } from ".";
 import { CastSkeleton, DetailsSkeleton } from "../skeletons";
 import { useFetch } from "../../../hooks/useFetch";
 import { CastElement } from "../../../interfaces";
@@ -18,6 +18,7 @@ interface MediaDetailsProps {
 
 export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi }) => {
 
+  const [ showPopUpVideo , setShowPopUpVideo ] = useState<boolean>( false ); 
   const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
   
   const { crew = [], cast = [] } = !!crewData && crewData; 
@@ -118,7 +119,10 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                             <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
                           </div>
                           <div className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white">
-                            <div className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                            <div 
+                              className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center"
+                              onClick={ () => setShowPopUpVideo( true ) }
+                            >
                               <CiPlay1 className="icon"/>
                             </div>
                             <span>Watch trailer</span>
@@ -150,6 +154,11 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                       
               </div>
               <div className="overlay-view col-12 position-absolute w-100 h-100 animate__animated animate__fadeIn animate__faster"> </div>
+              
+              {
+                showPopUpVideo && <VideoPopUp/>
+              }
+            
             </section>
     }
     
