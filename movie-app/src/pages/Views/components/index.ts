@@ -1,3 +1,3 @@
 export * from './Details'
 export * from './CastCarousel'
-export * from './Video'
+export * from './VideoPopUp'
