@@ -7,22 +7,29 @@ import '../styles/Details.css';
 import { CastCarousel, VideoPopUp,  } from ".";
 import { CastSkeleton, DetailsSkeleton } from "../skeletons";
 import { useFetch } from "../../../hooks/useFetch";
-import { CastElement } from "../../../interfaces";
+import { CastElement, MediaVideos } from "../../../interfaces";
 
 interface MediaDetailsProps {
     data: MovieDetails; 
     isLoading: boolean; 
     movieId: string; 
-    mediaTypeApi: string; 
+    mediaTypeApi: string;
+    videoData: MediaVideos; 
 }
 
-export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi }) => {
+export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData }) => {
 
   const [ showPopUpVideo , setShowPopUpVideo ] = useState<boolean>( false ); 
+  const [ videoId, setVideoId ] = useState<string | null>('');
+  
   const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
   
   const { crew = [], cast = [] } = !!crewData && crewData; 
+  const { results = [] } = !!videoData && videoData; 
+
+  const trailer = results.filter( video => video.type === 'Trailer'); 
   
+
   const director = crew.find( (person:CastElement) => person.job === 'Director'); 
   const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
   
@@ -39,6 +46,11 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
         backdrop_path, genres
       } = !!data && data;
 
+
+      const onWatchTrailer = () => {
+        setShowPopUpVideo( true ); 
+        setVideoId( trailer[0].key ); 
+      }
 
     const relaseDate = useMemo( () => {
       const date = new Date( release_date );
@@ -121,7 +133,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                           <div className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white">
                             <div 
                               className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center"
-                              onClick={ () => setShowPopUpVideo( true ) }
+                              onClick={ () => onWatchTrailer() }
                             >
                               <CiPlay1 className="icon"/>
                             </div>
@@ -156,7 +168,13 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
               <div className="overlay-view col-12 position-absolute w-100 h-100 animate__animated animate__fadeIn animate__faster"> </div>
               
               {
-                showPopUpVideo && <VideoPopUp/>
+                showPopUpVideo 
+                  && <VideoPopUp 
+                      // showPopUpVideo = { showPopUpVideo } 
+                      setShowPopUpVideo = { setShowPopUpVideo }
+                      videoId = { videoId }
+                      setVideoId = { setVideoId } 
+                    />
               }
             
             </section>
