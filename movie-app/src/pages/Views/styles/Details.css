@@ -34,6 +34,7 @@
 
 .play-trailer-button .icon{
     font-size: 2.1rem;
+    pointer-events: none;
 }
 
 
