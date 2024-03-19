@@ -1,0 +1,8 @@
+.video-modal{
+    z-index: 11;
+    backdrop-filter: blur(5px);
+}
+.video-wrapper{
+    width: 700px;
+    height: 450px;
+}

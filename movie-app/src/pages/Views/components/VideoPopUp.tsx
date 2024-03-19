@@ -20,11 +20,10 @@ export const VideoPopUp: React.FC<VideoPopProps> = ( { setShowPopUpVideo, videoI
     <>
         <div 
             className="video-modal position-fixed fixed-top position-absolute w-100 vh-100 d-flex justify-content-center align-items-center" 
-            style={{ zIndex:'11', backdropFilter:'blur(5px)'}}
             onClick={() => onClosePopUp() }
         >
-            <div className="video-wrapper" style={{ width: '700px', height: '450px'}}>
-                <button className="btn-close" type="button" aria-label="Close">CLOSE</button>
+            <div className="video-wrapper d-flex justify-content-center align-items-center flex-column">
+                <button className="btn btn-close-modal text-white ms-auto">CLOSE</button>
                 <ReactPlayer
                     url={`https://www.youtube.com/watch?v=${ videoId }`}
                     controls
