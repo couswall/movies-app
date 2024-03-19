@@ -1,6 +1,6 @@
 import { ScrollRestoration, useParams } from "react-router-dom"
 import { getMediaById } from "../../helpers";
-import { Details } from "./components";
+import { Details, VideoSection } from "./components";
 import { useFetch } from "../../hooks/useFetch";
 
 
@@ -14,7 +14,7 @@ export const MovieView = () => {
 
     <>
       <Details data = { data } isLoading={ isLoading } movieId={ movieId } mediaTypeApi='movie' videoData = { videoData }/>
-    
+      <VideoSection/>
       
       <ScrollRestoration/>
     </>
