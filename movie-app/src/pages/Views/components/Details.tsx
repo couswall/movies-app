@@ -130,11 +130,12 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                           <div className= "circle-details p-3 d-flex justify-content-center align-items-center">
                             <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
                           </div>
-                          <div className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white">
+                          <div 
+                            className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
+                            onClick={ () => onWatchTrailer() }
+                          >
                             <div 
-                              className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center"
-                              onClick={ () => onWatchTrailer() }
-                            >
+                              className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
                               <CiPlay1 className="icon"/>
                             </div>
                             <span>Watch trailer</span>
