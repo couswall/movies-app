@@ -1,0 +1,24 @@
+/* Video container */
+.video-section .carousel-video-wrapper .video-container{
+    width: 100%;
+    height: 180px;
+    cursor: pointer;
+}
+
+/* Icon styles */
+.video-section .carousel-video-wrapper .video-container .icon{
+    color: #fff;
+    font-size: 40px;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+.video-section .carousel-video-wrapper .video-container:hover .icon{
+    color: #e03232;
+}
+
+
+/* Image Overlay */
+.video-container .image-video-wrapper .overlay{
+    background-color: rgba(0,0,0,0.6);
+}
