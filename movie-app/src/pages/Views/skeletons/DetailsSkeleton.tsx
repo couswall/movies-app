@@ -4,7 +4,8 @@ import './styles/CastSkeleton.css'
 
 export const DetailsSkeleton = () => {
   return (
-    <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center">
+    <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center" style={{height:'90vh'}}>
+      {/* <div className="overlay-view col-12 position-absolute w-100 h-100"> </div> */}
       
       <div className="details-section container position-absolute w-100 h-100 mt-5">
       <div className="details-wrapper row position-relative gap-4 mb-5">
@@ -55,7 +56,7 @@ export const DetailsSkeleton = () => {
             </div>  
             <CastSkeleton/>
       </div>
-      <div className="overlay-view col-12 position-absolute w-100 h-100"> </div>
+     
     </section>
   )
 }
