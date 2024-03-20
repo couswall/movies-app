@@ -42,6 +42,7 @@
     top: 0;
     right: 0;
     background: linear-gradient(0deg, rgba(3, 0, 28, 1) 0%, rgba(3, 0, 28, 0.89) 35%, rgba(3, 0, 28, 0.75) 100%);
+    z-index: 4;
 }
 
 
