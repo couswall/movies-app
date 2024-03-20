@@ -5,6 +5,10 @@ import { Autoplay } from 'swiper/modules';
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { VideoPopUp } from ".";
 import { useState } from "react";
+import { VideoSectionSkeleton } from "../skeletons";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
+import '../styles/VideoSection.css'
 
 
 interface VideoSectionProps{
@@ -58,35 +62,33 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
                 }}              
               >
                 {
-                  isLoadingVideos 
-                    ?
-                    Array(9).fill('').map( ( _, index ) => (
-                      <SwiperSlide key={ index }>
-                          <div style={{ width:'100%', height:'145px'}}>
-                              <div className="w-100 h-100 skeleton"></div>
-                          </div>
-                      </SwiperSlide>
-                    ))
-                    :
-                    results.map( ( clip: ResultVideos ) => (
-                    <SwiperSlide key={ clip.key }>
-                        <div 
-                          className="d-flex justify-content-center align-items-center position-relative" 
-                          style={{ width:'100%', height:'180px'}}
-                          onClick={ () => onHandleVideo( clip.key ) }
-                        >
-                            
-                            <div className="image-video-wrapper position-absolute w-100 h-100">
-                              <div className="w-100 h-100 position-absolute" style={{backgroundColor:'rgba(0,0,0,0.6)'}}></div>
-                              <img src={`https://img.youtube.com/vi/${clip.key}/hqdefault.jpg`} alt={clip.name} className="w-100 h-100"/>
-                            </div>
+                  ( isLoadingVideos )
 
-                            <FaRegCirclePlay className="text-white" style={{fontSize:'40px', zIndex:'2'}}/>
-                        </div>
-                    </SwiperSlide>
-                    ))
-                 
-                    
+                    ? Array(9).fill('').map( ( _, index ) => (
+                        <SwiperSlide key={ index }>
+                            <VideoSectionSkeleton/>
+                        </SwiperSlide>
+                      ))
+                    : results.map( ( clip: ResultVideos ) => (
+                        <SwiperSlide key={ clip.key }>
+                            <div 
+                              className="video-container d-flex justify-content-center align-items-center position-relative" 
+                              onClick={ () => onHandleVideo( clip.key ) }
+                            >
+                                <div className="image-video-wrapper position-absolute w-100 h-100">
+                                  <div className="overlay w-100 h-100 position-absolute"></div>
+                                  <LazyLoadImage 
+                                    src={`https://img.youtube.com/vi/${clip.key}/hqdefault.jpg`} 
+                                    alt={clip.name}
+                                    effect="blur" 
+                                    width='100%' 
+                                    height='100%'
+                                  />
+                                </div>
+                                <FaRegCirclePlay className="icon"/>
+                            </div>
+                        </SwiperSlide>
+                      ))   
                 }
                 </Swiper>
             </div>
