@@ -27,6 +27,9 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
                 }}
                 modules={[Autoplay]}
                 breakpoints={{
+                  300:{
+                    slidesPerView: 2
+                  }, 
                   575: {
                     slidesPerView: 2
                   }, 
