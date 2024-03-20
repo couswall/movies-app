@@ -15,11 +15,12 @@ interface MediaDetailsProps {
     movieId: string; 
     mediaTypeApi: string;
     videoData: MediaVideos; 
+    showPopUpVideo?: boolean;  
+    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>; 
 }
 
-export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData }) => {
+export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData, showPopUpVideo, setShowPopUpVideo }) => {
 
-  const [ showPopUpVideo , setShowPopUpVideo ] = useState<boolean>( false ); 
   const [ videoId, setVideoId ] = useState<string | null>('');
   
   const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
