@@ -81,14 +81,9 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
       ( isLoading ) 
         ? <DetailsSkeleton/>
         :
-        <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center" 
-          style={{ 
-            // filter: !isLoading ? "none" : "blur(10px)",
-            // transition: "filter 0.6s",
-            height: '90vh'
-          }}
-        >
-          
+        <section className="container-fluid p-0 position-relative d-flex justify-content-center align-items-center">
+          <div className="col-12 position-absolute w-100 h-100 animate__animated animate__fadeIn animate__faster">
+            <div className="overlay-view position-absolute w-100 h-100"></div>
               <LazyLoadImage 
                 src={ `https://image.tmdb.org/t/p/original/${ backdrop_path }` }
                 effect="blur" 
@@ -101,8 +96,9 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                 }}
                 alt={ title || original_title }
                 />
+          </div>
       
-              <div className="details-section container position-absolute w-100 h-100 mt-5">
+              <div className="details-section container  w-100 h-100 mt-5">
                     <div className="details-wrapper row position-relative gap-4 mb-5 animate__animated animate__fadeIn">
                       <div className="img-container-view col-xs-12 col-md-5 col-lg-4 col-xl-3 p-0 mx-auto overflow-hidden">
                         <img 
@@ -166,7 +162,6 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                     }  
                       
               </div>
-              <div className="overlay-view col-12 position-absolute w-100 h-100 animate__animated animate__fadeIn animate__faster"> </div>
               
               {
                 showPopUpVideo 
