@@ -30,6 +30,9 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
 
     return (
     <>
+        
+      {
+        ( results?.length > 0 ) && 
         <section className="video-section container mt-4 mb-4">
             <h3 className="mb-3">Official Videos</h3>
 
@@ -93,6 +96,7 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
                 </Swiper>
             </div>
         </section>
+      }
 
         {
           showPopUpVideo 
