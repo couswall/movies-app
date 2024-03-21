@@ -23,3 +23,6 @@ nav {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.cursor-pointer{
+    cursor: pointer;
+}
