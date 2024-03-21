@@ -22,6 +22,7 @@ export const Carousel: React.FC<CarouselProps> = ({ moviesArray = [], media_type
         <Swiper
           loop= { true }
           spaceBetween={20}
+          slidesPerView={2}
           autoplay= {{
             delay: 5000, 
             disableOnInteraction: false
@@ -35,9 +36,9 @@ export const Carousel: React.FC<CarouselProps> = ({ moviesArray = [], media_type
               slidesPerView: 4
             },
             991: {
-              slidesPerView: 4
+              slidesPerView: 5
             },
-            1200: {
+            1400: {
               slidesPerView: 6
             }
           }}              
