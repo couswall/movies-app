@@ -13,15 +13,22 @@ export const Similar: React.FC<SimilarProps> = ({similarMedia, isLoadingSimilar,
     const { results } = !!similarMedia && similarMedia; 
 
     return (
-    <section className="similar-section container mt-4 mb-4">
-        <h3 className="mb-3">Similar {mediaTitle}</h3>
+    <>
+    {
+        ( results?.length > 0 ) && 
 
-        {
-            ( isLoadingSimilar ) 
-                ? <CarouselSkeleton/>  
-                : <Carousel moviesArray={ results }/>
-        }
+        <section className="similar-section container mt-4 mb-4">
+            <h3 className="mb-3">Similar {mediaTitle}</h3>
 
-    </section>
+            {
+                ( isLoadingSimilar ) 
+                    ? <CarouselSkeleton/>  
+                    : <Carousel moviesArray={ results }/>
+            }
+
+        </section>
+    }
+    
+    </>
   )
 }

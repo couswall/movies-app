@@ -13,15 +13,20 @@ export const Recommended: React.FC<RecommendedProps> = ({recommendedMedia,isLoad
   const { results } = !!recommendedMedia && recommendedMedia; 
 
   return (
-    <section className="similar-section container mt-4 mb-4">
-        <h3 className="mb-3">Recommended {mediaTitle}</h3>
+    <>
+      {
+        ( results?.length > 0 ) && 
+          <section className="similar-section container mt-4 mb-4">
+              <h3 className="mb-3">Recommended {mediaTitle}</h3>
 
-        {
-            ( isLoadingRecommended ) 
-                ? <CarouselSkeleton/>  
-                : <Carousel moviesArray={ results }/>
-        }
+              {
+                  ( isLoadingRecommended ) 
+                      ? <CarouselSkeleton/>  
+                      : <Carousel moviesArray={ results }/>
+              }
 
-    </section>
+          </section>
+      }
+    </>
   )
 }
