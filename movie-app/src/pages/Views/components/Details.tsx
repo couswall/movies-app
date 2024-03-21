@@ -2,7 +2,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Genre, MovieDetails } from "../../../interfaces/MovieDetails";
 import { useMemo, useState } from "react";
 import { CiPlay1 } from "react-icons/ci";
-
+import NoPhoto from '/assets/no-poster.png'; 
 import '../styles/Details.css'; 
 import { CastCarousel, VideoPopUp,  } from ".";
 import { CastSkeleton, DetailsSkeleton } from "../skeletons";
@@ -75,6 +75,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
 
     }, [ movieId, isLoading ]); 
 
+    const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;  
 
   return (
     <>
@@ -104,7 +105,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                       <div className="img-container-view col-xs-12 col-md-5 col-lg-4 col-xl-3 p-0 mx-auto overflow-hidden">
                         <img 
                           className="img-movie-view"
-                          src={`https://image.tmdb.org/t/p/original/${ poster_path }`} 
+                          src={posterUrl} 
                           alt={ title || original_title} 
                           loading="lazy"
                         />
