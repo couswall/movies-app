@@ -35,7 +35,7 @@ export const MovieView = () => {
 
       <Similar similarMedia = { similarMedia } isLoadingSimilar = {isLoadingSimilar}/>
       
-      <ScrollRestoration/>
+      <ScrollRestoration />
     </>
   )
 }
