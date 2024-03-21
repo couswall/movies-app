@@ -1,6 +1,6 @@
 import { ScrollRestoration, useParams } from "react-router-dom"
 import { getMediaById } from "../../helpers";
-import { Details, Similar, VideoSection } from "./components";
+import { Details, Recommended, Similar, VideoSection } from "./components";
 import { useFetch } from "../../hooks/useFetch";
 import { useState } from "react";
 
@@ -12,7 +12,8 @@ export const MovieView = () => {
   const { data, isLoading } = getMediaById('movie', movieId ); 
   const { data: videoData, isLoading: isLoadingVideos } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
   const { data: similarMedia, isLoading: isLoadingSimilar } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/similar`);
-  
+  const { data: recommendedMedia, isLoading: isLoadingRecommended} = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/recommendations`);
+
   return (
 
     <>
@@ -33,8 +34,16 @@ export const MovieView = () => {
         setShowPopUpVideo={ setShowPopUpVideo }
       />
 
-      <Similar similarMedia = { similarMedia } isLoadingSimilar = {isLoadingSimilar}/>
+      <Similar 
+        similarMedia = { similarMedia } 
+        isLoadingSimilar = {isLoadingSimilar}
+      />
       
+      <Recommended 
+        recommendedMedia = {recommendedMedia} 
+        isLoadingRecommended={isLoadingRecommended}
+      />
+
       <ScrollRestoration />
     </>
   )
