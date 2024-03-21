@@ -37,11 +37,13 @@ export const MovieView = () => {
       <Similar 
         similarMedia = { similarMedia } 
         isLoadingSimilar = {isLoadingSimilar}
+        mediaTitle = 'Movies'
       />
       
       <Recommended 
         recommendedMedia = {recommendedMedia} 
         isLoadingRecommended={isLoadingRecommended}
+        mediaTitle = 'Movies'
       />
 
       <ScrollRestoration />
