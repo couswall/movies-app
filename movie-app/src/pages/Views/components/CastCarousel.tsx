@@ -42,12 +42,12 @@ export const CastCarousel: React.FC<CastCarouselProps> = ({castArray}) => {
                 }}              
               >
                     {
-                      castArray.map( (person: CastElement) => {
+                      castArray.map( (person: CastElement, index) => {
 
                         const profilePhoto = person.profile_path ? 'https://image.tmdb.org/t/p/w185/' + person.profile_path : NoPhoto;
 
                         return (
-                          <SwiperSlide key={person.id} >
+                          <SwiperSlide key={person.id + index} >
                             <div className="cast-container">
                             <div className="img-cast-container overflow-hidden mx-auto mb-2" style={{ width: '100px', height: '100px', borderRadius:'50%'}}>
                               <img 
