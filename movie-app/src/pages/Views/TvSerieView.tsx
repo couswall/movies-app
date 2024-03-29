@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ScrollRestoration, useParams } from "react-router-dom";
 import { getMediaById } from "../../helpers";
 import { useFetch } from "../../hooks/useFetch";
-import { Details, Recommended, Similar, VideoSection } from "./components";
+import { Recommended, Similar, TvDetails, VideoSection } from "./components";
 
 export const TvSerieView = () => {
 
@@ -15,7 +15,7 @@ export const TvSerieView = () => {
 
   return (
     <>
-      <Details 
+      {/* <Details 
         data = { data } 
         isLoading={ isLoading } 
         movieId={ tvId } 
@@ -23,7 +23,9 @@ export const TvSerieView = () => {
         videoData = { videoData }
         showPopUpVideo = { showPopUpVideo }
         setShowPopUpVideo={ setShowPopUpVideo }
-      />
+      /> */}
+
+      <TvDetails/>
       
       <VideoSection 
         videoData = { videoData } 
