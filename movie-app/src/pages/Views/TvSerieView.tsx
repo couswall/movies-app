@@ -25,7 +25,14 @@ export const TvSerieView = () => {
         setShowPopUpVideo={ setShowPopUpVideo }
       /> */}
 
-      <TvDetails/>
+      <TvDetails
+        data={ data }
+        isLoading={ isLoading }
+        videoData = { videoData }
+        movieId={ tvId } 
+        showPopUpVideo = { showPopUpVideo }
+        setShowPopUpVideo={ setShowPopUpVideo }
+      />
       
       <VideoSection 
         videoData = { videoData } 
