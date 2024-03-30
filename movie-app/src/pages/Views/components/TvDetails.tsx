@@ -1,23 +1,42 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component"
 
 import NoPhoto from '/assets/no-poster.png'; 
-import { TvSerieIndividual } from "../../../interfaces"
+import { MediaVideos, TvSerieIndividual } from "../../../interfaces"
 import { DetailsSkeleton } from "../skeletons"
 import { Genre } from "../../../interfaces/TvSeriesDetails";
+import { CiPlay1 } from "react-icons/ci";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
     isLoading: boolean, 
     movieId: string,
+    videoData: MediaVideos
+    showPopUpVideo: boolean, 
+    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId} ) => {
+export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, showPopUpVideo, setShowPopUpVideo} ) => {
 
-    const { name, backdrop_path, poster_path, first_air_date, genres, tagline } = !!data && data; 
+    const { results = [] } = !!videoData && videoData; 
+    const { 
+        name, 
+        backdrop_path, 
+        poster_path, 
+        first_air_date, 
+        genres, 
+        tagline, 
+        vote_average, 
+        overview,
+        status, 
+        episode_run_time
+     } = !!data && data; 
+    
+     const [ videoId, setVideoId ] = useState<string | null>('');
 
     const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;
-
+    const trailer = results.filter( video => video.type === 'Trailer'); 
+    
     const realseYear = useMemo( () => {
         if(data){
             const arrayDate = first_air_date.split("-");
@@ -25,6 +44,32 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId} )
         }
         return ''
     }, [ movieId, isLoading ]); 
+
+    const relaseDate = useMemo( () => {
+        const date = new Date( first_air_date );
+        const options: Intl.DateTimeFormatOptions = { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        }; 
+        return date.toLocaleDateString('en-US', options);
+    }, [ movieId, isLoading ]);
+
+    const runTime = useMemo ( () => {
+
+        if( !episode_run_time[0] ){
+            return 'Unknown';
+        }else{
+            return `${episode_run_time[0]}m / episode`;
+        } 
+
+
+    }, [ movieId, isLoading ]); 
+
+    const onWatchTrailer = () => {
+        setShowPopUpVideo( true ); 
+        setVideoId( trailer[0].key );
+    }
 
   return (
     <>
@@ -69,6 +114,33 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId} )
                                         <p className="badge bg-secondary" style={{ fontSize: '13px'}} key={ genre.name }>{genre.name}</p>
                                         ))
                                     }                  
+                                </div>
+
+                                <div className="d-flex gap-2 mb-3 details-buttons">
+                                    <div className= "circle-details p-3 d-flex justify-content-center align-items-center">
+                                        <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
+                                    </div>
+                                    <div 
+                                        className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
+                                        onClick={ () => onWatchTrailer() }
+                                    >
+                                        <div 
+                                        className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                                        <CiPlay1 className="icon"/>
+                                        </div>
+                                        <span>Watch trailer</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5>Overview</h5>
+                                    <p className="overview">{ overview }</p>
+
+                                    <div className="d-flex gap-3">
+                                        <p>Status: <span className="fw-lighter">{ status }</span></p>
+                                        <p>Release Date: <span className="fw-lighter">{ relaseDate }</span></p>
+                                        <p>Runtime: <span className="fw-lighter">{ runTime } </span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
