@@ -6,19 +6,23 @@ import { MediaVideos, TvSerieIndividual } from "../../../interfaces"
 import { DetailsSkeleton } from "../skeletons"
 import { Genre } from "../../../interfaces/TvSeriesDetails";
 import { CiPlay1 } from "react-icons/ci";
+import { useFetch } from "../../../hooks/useFetch";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
     isLoading: boolean, 
     movieId: string,
+    mediaTypeApi: string,
     videoData: MediaVideos
     showPopUpVideo: boolean, 
     setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, showPopUpVideo, setShowPopUpVideo} ) => {
+export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, showPopUpVideo, setShowPopUpVideo, mediaTypeApi} ) => {
 
     const { results = [] } = !!videoData && videoData; 
+    const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
+    console.log( crewData )
     const { 
         name, 
         backdrop_path, 
@@ -57,11 +61,13 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
 
     const runTime = useMemo ( () => {
 
-        if( !episode_run_time[0] ){
-            return 'Unknown';
-        }else{
-            return `${episode_run_time[0]}m / episode`;
-        } 
+        if ( !isLoading ) {
+            if( !episode_run_time[0] ){
+                return 'Unknown';
+            }else{
+                return `${episode_run_time[0]}m / episode`;
+            } 
+        }
 
 
     }, [ movieId, isLoading ]); 
