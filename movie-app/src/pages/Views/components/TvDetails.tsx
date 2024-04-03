@@ -2,11 +2,12 @@ import { useMemo, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component"
 
 import NoPhoto from '/assets/no-poster.png'; 
-import { MediaVideos, TvSerieIndividual } from "../../../interfaces"
-import { DetailsSkeleton } from "../skeletons"
+import { CastElement, MediaVideos, TvSerieIndividual } from "../../../interfaces"
+import { CastSkeleton, DetailsSkeleton } from "../skeletons"
 import { Genre } from "../../../interfaces/TvSeriesDetails";
 import { CiPlay1 } from "react-icons/ci";
 import { useFetch } from "../../../hooks/useFetch";
+import { CastCarousel } from ".";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
@@ -22,13 +23,14 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
 
     const { results = [] } = !!videoData && videoData; 
     const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
-    console.log( crewData )
+    const { cast = [], crew = [] } = !!crewData && crewData;
+
     const { 
         name, 
         backdrop_path, 
         poster_path, 
         first_air_date, 
-        genres, 
+        genres = [], 
         tagline, 
         vote_average, 
         overview,
@@ -40,6 +42,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
 
     const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;
     const trailer = results.filter( video => video.type === 'Trailer'); 
+    const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
     
     const realseYear = useMemo( () => {
         if(data){
@@ -76,7 +79,6 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
         setShowPopUpVideo( true ); 
         setVideoId( trailer[0].key );
     }
-
   return (
     <>
         {
@@ -150,7 +152,14 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                                 </div>
                             </div>
                         </div>
+                    {
+                        ( isCastLoading )
+                            ? <CastSkeleton/>
+                            : <CastCarousel castArray={ castArray }/>
+                    }
                     </div>
+                    
+
                   </section>  
         }
     </>
