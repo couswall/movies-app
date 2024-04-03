@@ -45,6 +45,7 @@ export const TvSerieView = () => {
       <Similar 
         similarMedia = { similarMedia } 
         isLoadingSimilar = {isLoadingSimilar}
+        mediaTypeApi='tv'
         mediaTitle = 'Shows'
       />
       

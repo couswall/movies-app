@@ -38,6 +38,7 @@ export const MovieView = () => {
         similarMedia = { similarMedia } 
         isLoadingSimilar = {isLoadingSimilar}
         mediaTitle = 'Movies'
+        mediaTypeApi='movie' 
       />
       
       <Recommended 
