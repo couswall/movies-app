@@ -29,6 +29,7 @@ export const TvSerieView = () => {
         data={ data }
         isLoading={ isLoading }
         videoData = { videoData }
+        mediaTypeApi='tv'
         movieId={ tvId } 
         showPopUpVideo = { showPopUpVideo }
         setShowPopUpVideo={ setShowPopUpVideo }
