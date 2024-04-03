@@ -5,10 +5,11 @@ import { CarouselSkeleton } from "../skeletons";
 interface SimilarProps {
     similarMedia: Movie; 
     isLoadingSimilar: boolean;
-    mediaTitle: string; 
+    mediaTitle: string;
+    mediaTypeApi?: string;  
 }
 
-export const Similar: React.FC<SimilarProps> = ({similarMedia, isLoadingSimilar, mediaTitle }) => {
+export const Similar: React.FC<SimilarProps> = ({similarMedia, isLoadingSimilar, mediaTitle, mediaTypeApi }) => {
     
     const { results } = !!similarMedia && similarMedia; 
 
@@ -23,7 +24,7 @@ export const Similar: React.FC<SimilarProps> = ({similarMedia, isLoadingSimilar,
             {
                 ( isLoadingSimilar ) 
                     ? <CarouselSkeleton/>  
-                    : <Carousel moviesArray={ results }/>
+                    : <Carousel moviesArray={ results } media_type_props = { mediaTypeApi }/>
             }
 
         </section>
