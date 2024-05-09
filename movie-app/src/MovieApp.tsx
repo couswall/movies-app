@@ -1,4 +1,6 @@
+import { Provider } from "react-redux"
 import { AppRouter } from "./router/AppRouter"
+import { store } from "./store/store"
 
 
 export const MovieApp = () => {
@@ -6,7 +8,9 @@ export const MovieApp = () => {
     
   return (
     <>
-        <AppRouter/>
+        <Provider store={ store }>
+          <AppRouter/>
+        </Provider>
     </>
   )
 }
