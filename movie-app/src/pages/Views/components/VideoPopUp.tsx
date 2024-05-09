@@ -1,17 +1,18 @@
 import ReactPlayer from "react-player"
 import '../styles/VideoPopUp.css';
+import { useUiStore } from "../../../hooks/useUiStore";
 
 interface VideoPopProps {
-    showPopUpVideo?: boolean;  
-    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>; 
     videoId: string | null;   
     setVideoId: React.Dispatch<React.SetStateAction<string | null>>; 
 }
 
-export const VideoPopUp: React.FC<VideoPopProps> = ( { setShowPopUpVideo, videoId, setVideoId } ) => {
+export const VideoPopUp: React.FC<VideoPopProps> = ( { videoId, setVideoId } ) => {
+
+    const { closeVideoModal } = useUiStore();
 
     const onClosePopUp = () => {
-        setShowPopUpVideo( false ); 
+        closeVideoModal();
         setVideoId( null ); 
     }
 
