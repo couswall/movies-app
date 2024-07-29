@@ -4,28 +4,28 @@ import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { VideoPopUp } from ".";
-import { useState } from "react";
 import { VideoSectionSkeleton } from "../skeletons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import '../styles/VideoSection.css'
+import { useUiStore } from "../../../hooks";
 
 
 interface VideoSectionProps{
     videoData: MediaVideos, 
     isLoadingVideos: boolean; 
-    showPopUpVideo?: boolean;  
-    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>; 
+    isVideoModalOpen: boolean; 
+    openVideoModal: () => void; 
 }
 
-export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingVideos, showPopUpVideo, setShowPopUpVideo}) => {
+export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingVideos, isVideoModalOpen, openVideoModal}) => {
   
     const { results } = !!videoData && videoData; 
-    const [ videoId, setVideoId ] = useState<string | null>('');
+    const {videoId, handleSetVideoId} = useUiStore();
      
     const onHandleVideo = ( videoKey: string ) => {
-      setShowPopUpVideo( true ); 
-      setVideoId( videoKey );
+      openVideoModal(); 
+      handleSetVideoId(videoKey);
     }
 
     return (
@@ -99,12 +99,11 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
       }
 
         {
-          showPopUpVideo 
+          isVideoModalOpen 
             && <VideoPopUp 
-                setShowPopUpVideo = { setShowPopUpVideo }
-                videoId = { videoId }
-                setVideoId = { setVideoId } 
-              />
+                  videoId = { videoId }
+                  handleSetVideoId={handleSetVideoId}
+                />
         }
 
     </>

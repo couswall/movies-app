@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface UiState {
   isVideoModalOpen: boolean; 
+  videoId: string;
 }
 
 const initialState: UiState = {
-  isVideoModalOpen: false, 
+  isVideoModalOpen: false,
+  videoId: '', 
 }
 
 export const uiSlice = createSlice({
@@ -18,9 +20,12 @@ export const uiSlice = createSlice({
     }, 
     onCloseVideoModal: ( state ) => {
         state.isVideoModalOpen = false; 
-    } 
+    },
+    setVideoId: (state, action) => {
+        state.videoId = action.payload;
+    }, 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onCloseVideoModal, onOpenVideoModal } = uiSlice.actions
+export const { onCloseVideoModal, onOpenVideoModal, setVideoId } = uiSlice.actions

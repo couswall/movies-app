@@ -4,18 +4,17 @@ import { useUiStore } from "../../../hooks/useUiStore";
 
 interface VideoPopProps {
     videoId: string | null;   
-    setVideoId: React.Dispatch<React.SetStateAction<string | null>>; 
+    handleSetVideoId: (id: string) => void;
 }
 
-export const VideoPopUp: React.FC<VideoPopProps> = ( { videoId, setVideoId } ) => {
+export const VideoPopUp: React.FC<VideoPopProps> = ( { videoId, handleSetVideoId } ) => {
 
     const { closeVideoModal } = useUiStore();
 
     const onClosePopUp = () => {
         closeVideoModal();
-        setVideoId( null ); 
+        handleSetVideoId('');
     }
-
 
   return (
     <>
@@ -28,7 +27,6 @@ export const VideoPopUp: React.FC<VideoPopProps> = ( { videoId, setVideoId } ) =
                 <ReactPlayer
                     url={`https://www.youtube.com/watch?v=${ videoId }`}
                     controls
-                    playing = { true }
                     width="100%"
                     height="100%"
                 />

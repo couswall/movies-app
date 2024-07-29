@@ -1,6 +1,6 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Genre, MovieDetails } from "../../../interfaces/MovieDetails";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { CiPlay1 } from "react-icons/ci";
 import NoPhoto from '/assets/no-poster.png'; 
 import '../styles/Details.css'; 
@@ -8,6 +8,7 @@ import { CastCarousel, VideoPopUp,  } from ".";
 import { CastSkeleton, DetailsSkeleton } from "../skeletons";
 import { useFetch } from "../../../hooks/useFetch";
 import { CastElement, MediaVideos } from "../../../interfaces";
+import { useUiStore } from "../../../hooks";
 
 interface MediaDetailsProps {
     data: MovieDetails; 
@@ -15,14 +16,14 @@ interface MediaDetailsProps {
     movieId: string; 
     mediaTypeApi: string;
     videoData: MediaVideos; 
-    showPopUpVideo?: boolean;  
-    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>; 
+    isVideoModalOpen: boolean; 
+    openVideoModal: () => void; 
 }
 
-export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData, showPopUpVideo, setShowPopUpVideo }) => {
+export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData, isVideoModalOpen, openVideoModal }) => {
 
-  const [ videoId, setVideoId ] = useState<string | null>('');
-  
+  const {videoId, handleSetVideoId} = useUiStore();
+
   const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
   
   const { crew = [], cast = [] } = !!crewData && crewData; 
@@ -49,8 +50,8 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
 
 
       const onWatchTrailer = () => {
-        setShowPopUpVideo( true ); 
-        setVideoId( trailer[0].key ); 
+        openVideoModal(); 
+        handleSetVideoId(trailer[0].key)
       }
 
     const relaseDate = useMemo( () => {
@@ -166,13 +167,11 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
               </div>
               
               {
-                showPopUpVideo 
+                isVideoModalOpen
                   && <VideoPopUp 
-                      // showPopUpVideo = { showPopUpVideo } 
-                      setShowPopUpVideo = { setShowPopUpVideo }
-                      videoId = { videoId }
-                      setVideoId = { setVideoId } 
-                    />
+                        videoId = { videoId }
+                        handleSetVideoId = { handleSetVideoId } 
+                      />
               }
             
             </section>

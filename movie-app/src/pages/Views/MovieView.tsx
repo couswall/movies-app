@@ -1,14 +1,14 @@
 import { ScrollRestoration, useParams } from "react-router-dom"
 import { getMediaById } from "../../helpers";
 import { Details, Recommended, Similar, VideoSection } from "./components";
-import { useFetch } from "../../hooks/useFetch";
-import { useState } from "react";
-
+import { useFetch, useUiStore } from "../../hooks/";
 
 export const MovieView = () => {
 
   const { movieId = '' } = useParams() as { movieId: string}; 
-  const [ showPopUpVideo , setShowPopUpVideo ] = useState<boolean>( false ); 
+  const { isVideoModalOpen, openVideoModal } = useUiStore();
+
+
   const { data, isLoading } = getMediaById('movie', movieId ); 
   const { data: videoData, isLoading: isLoadingVideos } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
   const { data: similarMedia, isLoading: isLoadingSimilar } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/similar`);
@@ -23,15 +23,15 @@ export const MovieView = () => {
         movieId={ movieId } 
         mediaTypeApi='movie' 
         videoData = { videoData }
-        showPopUpVideo = { showPopUpVideo }
-        setShowPopUpVideo={ setShowPopUpVideo }
+        isVideoModalOpen = { isVideoModalOpen }
+        openVideoModal = {openVideoModal}
       />
       
       <VideoSection 
         videoData = { videoData } 
         isLoadingVideos = { isLoadingVideos }
-        showPopUpVideo = { showPopUpVideo }
-        setShowPopUpVideo={ setShowPopUpVideo }
+        isVideoModalOpen = { isVideoModalOpen }
+        openVideoModal = {openVideoModal}
       />
 
       <Similar 
