@@ -16,13 +16,11 @@ interface MediaDetailsProps {
     movieId: string; 
     mediaTypeApi: string;
     videoData: MediaVideos; 
-    isVideoModalOpen: boolean; 
-    openVideoModal: () => void; 
 }
 
-export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData, isVideoModalOpen, openVideoModal }) => {
+export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId, mediaTypeApi, videoData }) => {
 
-  const {videoId, handleSetVideoId} = useUiStore();
+  const {handleSetVideoId, isVideoModalOpen, openVideoModal} = useUiStore();
 
   const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
   
@@ -166,13 +164,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                       
               </div>
               
-              {
-                isVideoModalOpen
-                  && <VideoPopUp 
-                        videoId = { videoId }
-                        handleSetVideoId = { handleSetVideoId } 
-                      />
-              }
+              {isVideoModalOpen && <VideoPopUp />}
             
             </section>
     }

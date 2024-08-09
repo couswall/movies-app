@@ -14,14 +14,12 @@ import { useUiStore } from "../../../hooks";
 interface VideoSectionProps{
     videoData: MediaVideos, 
     isLoadingVideos: boolean; 
-    isVideoModalOpen: boolean; 
-    openVideoModal: () => void; 
 }
 
-export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingVideos, isVideoModalOpen, openVideoModal}) => {
+export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingVideos}) => {
   
     const { results } = !!videoData && videoData; 
-    const {videoId, handleSetVideoId} = useUiStore();
+    const {handleSetVideoId, openVideoModal, isVideoModalOpen} = useUiStore();
      
     const onHandleVideo = ( videoKey: string ) => {
       openVideoModal(); 
@@ -98,13 +96,7 @@ export const VideoSection: React.FC<VideoSectionProps> = ({videoData, isLoadingV
         </section>
       }
 
-        {
-          isVideoModalOpen 
-            && <VideoPopUp 
-                  videoId = { videoId }
-                  handleSetVideoId={handleSetVideoId}
-                />
-        }
+        {isVideoModalOpen && <VideoPopUp/>}
 
     </>
   )

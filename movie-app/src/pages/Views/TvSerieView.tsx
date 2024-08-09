@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ScrollRestoration, useParams } from "react-router-dom";
 import { getMediaById } from "../../helpers";
 import { useFetch } from "../../hooks/useFetch";
@@ -7,7 +6,6 @@ import { Recommended, Similar, TvDetails, VideoSection } from "./components";
 export const TvSerieView = () => {
 
   const { tvId = '' } = useParams() as { tvId: string}; 
-  const [ showPopUpVideo , setShowPopUpVideo ] = useState<boolean>( false ); 
   const { data, isLoading } = getMediaById('tv', tvId ); 
   const { data: videoData, isLoading: isLoadingVideos } = useFetch(`https://api.themoviedb.org/3/tv/${tvId}/videos`);
   const { data: similarMedia, isLoading: isLoadingSimilar } = useFetch(`https://api.themoviedb.org/3/tv/${tvId}/similar`);
@@ -15,31 +13,17 @@ export const TvSerieView = () => {
 
   return (
     <>
-      {/* <Details 
-        data = { data } 
-        isLoading={ isLoading } 
-        movieId={ tvId } 
-        mediaTypeApi='movie' 
-        videoData = { videoData }
-        showPopUpVideo = { showPopUpVideo }
-        setShowPopUpVideo={ setShowPopUpVideo }
-      /> */}
-
       <TvDetails
         data={ data }
         isLoading={ isLoading }
         videoData = { videoData }
         mediaTypeApi='tv'
         movieId={ tvId } 
-        showPopUpVideo = { showPopUpVideo }
-        setShowPopUpVideo={ setShowPopUpVideo }
       />
       
       <VideoSection 
         videoData = { videoData } 
         isLoadingVideos = { isLoadingVideos }
-        showPopUpVideo = { showPopUpVideo }
-        setShowPopUpVideo={ setShowPopUpVideo }
       />
 
       <Similar 

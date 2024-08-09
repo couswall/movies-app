@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component"
 
 import NoPhoto from '/assets/no-poster.png'; 
@@ -7,7 +7,8 @@ import { CastSkeleton, DetailsSkeleton } from "../skeletons"
 import { Genre } from "../../../interfaces/TvSeriesDetails";
 import { CiPlay1 } from "react-icons/ci";
 import { useFetch } from "../../../hooks/useFetch";
-import { CastCarousel } from ".";
+import { CastCarousel, VideoPopUp } from ".";
+import { useUiStore } from "../../../hooks";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
@@ -15,12 +16,11 @@ interface TvDetailsProps {
     movieId: string,
     mediaTypeApi: string,
     videoData: MediaVideos
-    showPopUpVideo: boolean, 
-    setShowPopUpVideo: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, showPopUpVideo, setShowPopUpVideo, mediaTypeApi} ) => {
+export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, mediaTypeApi} ) => {
 
+    const {handleSetVideoId, openVideoModal, isVideoModalOpen} = useUiStore();
     const { results = [] } = !!videoData && videoData; 
     const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
     const { cast = [], crew = [] } = !!crewData && crewData;
@@ -38,10 +38,9 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
         episode_run_time
      } = !!data && data; 
     
-     const [ videoId, setVideoId ] = useState<string | null>('');
 
     const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;
-    const trailer = results.filter( video => video.type === 'Trailer'); 
+    const trailer = results.filter( video => video.type === 'Trailer');
     const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
     
     const realseYear = useMemo( () => {
@@ -75,9 +74,9 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
 
     }, [ movieId, isLoading ]); 
 
-    const onWatchTrailer = () => {
-        setShowPopUpVideo( true ); 
-        setVideoId( trailer[0].key );
+    const onWatchTrailer = ( videoKey: string ) => {
+        openVideoModal();
+        handleSetVideoId(videoKey);
     }
   return (
     <>
@@ -130,7 +129,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                                     </div>
                                     <div 
                                         className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
-                                        onClick={ () => onWatchTrailer() }
+                                        onClick={ () => onWatchTrailer( trailer[0].key ) }
                                     >
                                         <div 
                                         className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
@@ -159,6 +158,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                     }
                     </div>
                     
+                    {(isVideoModalOpen) && <VideoPopUp/>}
 
                   </section>  
         }
