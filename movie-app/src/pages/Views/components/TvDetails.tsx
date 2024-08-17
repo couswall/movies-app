@@ -9,6 +9,7 @@ import { CiPlay1 } from "react-icons/ci";
 import { useFetch } from "../../../hooks/useFetch";
 import { CastCarousel, VideoPopUp } from ".";
 import { useUiStore } from "../../../hooks";
+import { Overview } from "./Overview";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
@@ -52,13 +53,16 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
     }, [ movieId, isLoading ]); 
 
     const relaseDate = useMemo( () => {
-        const date = new Date( first_air_date );
-        const options: Intl.DateTimeFormatOptions = { 
-          year: 'numeric', 
-          month: 'short', 
-          day: 'numeric' 
-        }; 
-        return date.toLocaleDateString('en-US', options);
+        if ( first_air_date !== '' ) {
+            const date = new Date( first_air_date );
+            const options: Intl.DateTimeFormatOptions = { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            }; 
+            return date.toLocaleDateString('en-US', options);
+        }
+        return 'Unknown'
     }, [ movieId, isLoading ]);
 
     const runTime = useMemo ( () => {
@@ -77,7 +81,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
     const onWatchTrailer = ( videoKey: string ) => {
         openVideoModal();
         handleSetVideoId(videoKey);
-    }
+    };
   return (
     <>
         {
@@ -140,9 +144,9 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                                 </div>
 
                                 <div>
-                                    <h5>Overview</h5>
-                                    <p className="overview">{ overview }</p>
-
+                                    {
+                                        (overview !== '') && <Overview overview={overview}/>
+                                    }
                                     <div className="d-flex gap-3">
                                         <p>Status: <span className="fw-lighter">{ status }</span></p>
                                         <p>Release Date: <span className="fw-lighter">{ relaseDate }</span></p>
