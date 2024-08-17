@@ -154,7 +154,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                     {
                         ( isCastLoading )
                             ? <CastSkeleton/>
-                            : <CastCarousel castArray={ castArray }/>
+                            : castArray.length > 0 && <CastCarousel castArray={ castArray }/>
                     }
                     </div>
                     
