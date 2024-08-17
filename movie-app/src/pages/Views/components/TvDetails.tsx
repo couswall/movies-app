@@ -78,9 +78,11 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
 
     }, [ movieId, isLoading ]); 
 
-    const onWatchTrailer = ( videoKey: string ) => {
-        openVideoModal();
-        handleSetVideoId(videoKey);
+    const onWatchTrailer = ( videoKey: ( string | undefined) ) => {
+        if (videoKey) {
+            openVideoModal();
+            handleSetVideoId(videoKey);
+        }
     };
   return (
     <>
@@ -133,7 +135,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                                     </div>
                                     <div 
                                         className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
-                                        onClick={ () => onWatchTrailer( trailer[0].key ) }
+                                        onClick={ () => onWatchTrailer( trailer[0]?.key ) }
                                     >
                                         <div 
                                         className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
