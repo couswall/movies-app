@@ -18,7 +18,7 @@ export const TvSerieView = () => {
         isLoading={ isLoading }
         videoData = { videoData }
         mediaTypeApi='tv'
-        movieId={ tvId } 
+        tvId={ tvId } 
       />
       
       <VideoSection 

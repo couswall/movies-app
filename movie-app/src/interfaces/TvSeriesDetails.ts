@@ -92,3 +92,12 @@ export interface SpokenLanguage {
     iso_639_1:    string;
     name:         string;
 }
+
+export interface ICreators {
+    credit_id: string;
+    gender: number;
+    id: number;
+    name: string;
+    original_name: string;
+    profile_path: string;
+}

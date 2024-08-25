@@ -4,7 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import NoPhoto from '/assets/no-poster.png'; 
 import { CastElement, MediaVideos, TvSerieIndividual } from "../../../interfaces"
 import { CastSkeleton, DetailsSkeleton } from "../skeletons"
-import { Genre } from "../../../interfaces/TvSeriesDetails";
+import { Genre, ICreators } from "../../../interfaces/TvSeriesDetails";
 import { CiPlay1 } from "react-icons/ci";
 import { useFetch } from "../../../hooks/useFetch";
 import { CastCarousel, VideoPopUp } from ".";
@@ -14,17 +14,19 @@ import { Overview } from "./Overview";
 interface TvDetailsProps {
     data: TvSerieIndividual,
     isLoading: boolean, 
-    movieId: string,
+    tvId: string,
     mediaTypeApi: string,
     videoData: MediaVideos
 }
 
-export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, videoData, mediaTypeApi} ) => {
+export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, tvId, videoData, mediaTypeApi} ) => {
 
     const {handleSetVideoId, openVideoModal, isVideoModalOpen} = useUiStore();
     const { results = [] } = !!videoData && videoData; 
-    const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${movieId}/credits`); 
-    const { cast = [], crew = [] } = !!crewData && crewData;
+    const { data: crewData, isLoading: isCastLoading } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${tvId}/credits`); 
+    const { data: creatorsData } = useFetch(`https://api.themoviedb.org/3/${mediaTypeApi}/${tvId}`); 
+    const { cast = [] } = !!crewData && crewData;
+    const {created_by = []} = !!creatorsData && creatorsData;
 
     const { 
         name, 
@@ -50,7 +52,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
             return arrayDate[0]; 
         }
         return ''
-    }, [ movieId, isLoading ]); 
+    }, [ tvId, isLoading ]); 
 
     const relaseDate = useMemo( () => {
         if ( first_air_date !== '' ) {
@@ -63,7 +65,7 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
             return date.toLocaleDateString('en-US', options);
         }
         return 'Unknown'
-    }, [ movieId, isLoading ]);
+    }, [ tvId, isLoading ]);
 
     const runTime = useMemo ( () => {
 
@@ -74,9 +76,13 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                 return `${episode_run_time[0]}m / episode`;
             } 
         }
+    }, [ tvId, isLoading ]); 
 
-
-    }, [ movieId, isLoading ]); 
+    const creatorsName: string = useMemo(() => {
+        if(created_by.length === 0) return 'Unknown';
+        const creatorsArray: string[] = created_by.map( (person: ICreators) => person.name);        
+        return creatorsArray.join(', ');
+    }, [ tvId, isLoading ]);
 
     const onWatchTrailer = ( videoKey: ( string | undefined) ) => {
         if (videoKey) {
@@ -154,6 +160,17 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, movieId, v
                                         <p>Release Date: <span className="fw-lighter">{ relaseDate }</span></p>
                                         <p>Runtime: <span className="fw-lighter">{ runTime } </span></p>
                                     </div>
+                                    <hr />
+                                    <div className="d-flex gap-3">
+                                        <p className="mb-0">
+                                            {created_by.length > 1 ? 'Creators: ' : 'Creator: '} 
+                                            <span className="fw-lighter"
+                                        >
+                                            {creatorsName}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <hr />
                                 </div>
                             </div>
                         </div>
