@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { uiSlice } from './'
+import { moviesSlice, uiSlice } from './'
 
 export const store = configureStore({
   reducer: {
-    ui: uiSlice.reducer
+    ui: uiSlice.reducer,
+    movies: moviesSlice.reducer,
   },
 })
 
