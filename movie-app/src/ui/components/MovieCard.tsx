@@ -1,13 +1,33 @@
 import { useNavigate } from 'react-router-dom';
-import { Result } from '../../interfaces';
+import { MediaType} from '../../interfaces';
 import './styles';
 import NoPhoto from '/assets/no-poster.png'; 
 
-interface MediaTypeProps extends Result{
+interface MediaTypeProps extends MovieCardProps{
   media_type_props?: string; 
 }
+interface MovieCardProps {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path: string;
+  media_type: MediaType;
+  release_date?: string;
+  vote_average: number;
+  first_air_date?: string;
+}
 
-export const MovieCard: React.FC<Result & MediaTypeProps > = ({ id,title, name, poster_path, vote_average, release_date, first_air_date, media_type, media_type_props}) => {
+export const MovieCard: React.FC<MovieCardProps & MediaTypeProps> = ({ 
+  id,
+  title,
+  name,
+  poster_path,
+  vote_average,
+  release_date,
+  first_air_date,
+  media_type,
+  media_type_props,
+}) => {
 
   const navigate = useNavigate();
 

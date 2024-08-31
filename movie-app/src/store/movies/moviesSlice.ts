@@ -24,7 +24,12 @@ export const moviesSlice = createSlice({
             state.error = false;
         },
         getMoviesSuccess: (state, {payload}) => {
-            state.movies = payload;
+            state.movies = [
+                ...state.movies,
+                ...payload.filter(
+                    (newMovie: MovieObjectResponse) => !state.movies.some(movie => movie.id === newMovie.id)
+                )
+            ];
             state.isLoading = false;
             state.error = false;
         },
