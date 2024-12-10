@@ -4,33 +4,43 @@ import { Loading, MovieCard} from "../../ui/components";
 import { useMovies } from "../../hooks";
 import { MovieObjectResponse } from "../../interfaces/MovieObject";
 import { MediaType } from "../../interfaces";
+import { urlWeb } from "../../constants/apiEndpoints";
+import { useMoviesByGenres } from './hooks/useMoviesByGenres';
+import { ResultMoviesByGenre } from "../../store/movies/interfaces/moviesByGenre.interface";
 
 interface Genres {
   id: number;
   name: string;
 }
-
 export const MoviesPage = () => {
-
   const { startGettingMovies, movies, isLoading } = useMovies();
-  const [ allMovies, setAllMovies ] = useState<MovieObjectResponse[]>([]);
+  const {getMoviesByGenre, moviesByGenre} = useMoviesByGenres();
+  
+  const [ allMovies, setAllMovies ] = useState<MovieObjectResponse[] | ResultMoviesByGenre[]>([]);
+  const { data: genresData } = useFetch(urlWeb.movieGenres);
   const [nextPage, setNextPage] = useState(1);
-
-  const genresUrl: string = 'https://api.themoviedb.org/3/genre/movie/list';
-
-  const { data: genresData } = useFetch( genresUrl );
-  const { genres } = !!genresData && genresData;
-  const [currentGenre, setCurrentGenre] = useState("restart");
+  const { genres = [] } = !!genresData && genresData;
+  const [currentGenre, setCurrentGenre] = useState<string>('restart');
 
   useEffect(() => {
-    startGettingMovies(nextPage);
+    if (currentGenre === 'restart') {
+      startGettingMovies(nextPage);
+    }else{
+      getMoviesByGenre(Number(currentGenre), nextPage);
+    }
   }, [nextPage]);
 
   useEffect(() => {
     setAllMovies(movies);
   }, [movies]);
 
-  //Load More Movies
+  useEffect(() => {
+    if(moviesByGenre.length > 0){
+      setAllMovies(moviesByGenre);
+    }
+  }, [moviesByGenre])
+
+
   const loadMoreMovies = () => {
     setNextPage( prevPage => prevPage + 1 );
   };
@@ -53,19 +63,12 @@ export const MoviesPage = () => {
 
   // Select onChange function
   const onHandleGenre = ({target}: React.ChangeEvent<HTMLSelectElement>) => {
-    // const { value } = target;
-
-    // if ( value === 'restart') {
-    //   setNextPage(1);
-
-    // }else{
-    //   setNextPage(1);
-    //   setCurrentGenre(value)
-    //   const filterByGenre = results.filter( ( movie: MovieObject) => (movie.genre_ids)?.includes( parseInt( value ) ) );
-    //   setAllMovies( filterByGenre );
-    // }
+    const { value } = target;
+    setNextPage(1);
+    setCurrentGenre(value);
+    getMoviesByGenre(Number(value), 1);
   }
-
+  
   return (
     <section className="movies-section mt-5">
       <div className="container">
