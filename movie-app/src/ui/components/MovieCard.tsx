@@ -41,14 +41,15 @@ export const MovieCard: React.FC<MovieCardProps & MediaTypeProps> = ({
     return date.toLocaleDateString('en-US', options);
   }
 
-  const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;  
+  const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;
+  const voteAverage = vote_average ? (vote_average).toFixed(1) : (0).toFixed(1);
 
   return (
       <div className="card-movie animate__animated animate__fadeIn cursor-pointer" onClick={() => navigate(`/${ ( media_type === 'tv' || media_type_props === 'tv' ) ? 'tv-serie' : 'movie'}/${id}`)}>
         <div className="card-img-container position-relative mb-3">
           <img src={ posterUrl } alt={ title || name} loading='lazy'/>  
           <div className="raiting-circle position-absolute">
-            <span className='fw-bold text-black'>{ (vote_average).toFixed(1) }</span>
+            <span className='fw-bold text-black'>{ voteAverage }</span>
           </div>
         </div>
 

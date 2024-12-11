@@ -7,11 +7,9 @@ import { MediaType } from "../../interfaces";
 import { urlWeb } from "../../constants/apiEndpoints";
 import { useMoviesByGenres } from './hooks/useMoviesByGenres';
 import { ResultMoviesByGenre } from "../../store/movies/interfaces/moviesByGenre.interface";
+import { MOVIES_PAGE, sortMoviesOptions } from "../constants/MoviesPage.constants";
+import {ICurrentFilters, Genres} from '../interfaces/MoviesPage.interfaces';
 
-interface Genres {
-  id: number;
-  name: string;
-}
 export const MoviesPage = () => {
   const { startGettingMovies, movies, isLoading } = useMovies();
   const {getMoviesByGenre, moviesByGenre} = useMoviesByGenres();
@@ -20,13 +18,23 @@ export const MoviesPage = () => {
   const { data: genresData } = useFetch(urlWeb.movieGenres);
   const [nextPage, setNextPage] = useState(1);
   const { genres = [] } = !!genresData && genresData;
-  const [currentGenre, setCurrentGenre] = useState<string>('restart');
+  const [currentFilters, setCurrentFilters] = useState<ICurrentFilters>({
+    currentGenre: MOVIES_PAGE.DEFAULT_SELECT_VALUE,
+    currentSorting: MOVIES_PAGE.DEFAULT_SELECT_VALUE,
+  });
 
   useEffect(() => {
-    if (currentGenre === 'restart') {
+    if (currentFilters.currentGenre === MOVIES_PAGE.DEFAULT_SELECT_VALUE && currentFilters.currentSorting === MOVIES_PAGE.DEFAULT_SELECT_VALUE) {
       startGettingMovies(nextPage);
     }else{
-      getMoviesByGenre(Number(currentGenre), nextPage);
+      const filters = {
+        genre: currentFilters.currentGenre === MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+            ? MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+            : Number(currentFilters.currentGenre),
+        page: nextPage,
+        sortBy: currentFilters.currentSorting,
+      };
+      getMoviesByGenre(filters);
     }
   }, [nextPage]);
 
@@ -61,18 +69,39 @@ export const MoviesPage = () => {
     };
   }, []);
 
-  // Select onChange function
   const onHandleGenre = ({target}: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = target;
     setNextPage(1);
-    setCurrentGenre(value);
-    getMoviesByGenre(Number(value), 1);
-  }
+    setCurrentFilters({...currentFilters, currentGenre: value});
+    const filters = {
+      genre: value === MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+          ? MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+          : Number(value),
+      page: 1,
+      sortBy: currentFilters.currentSorting,
+    }
+    getMoviesByGenre(filters);
+  };
+
+  const handleChangeSorting = ({target}: React.ChangeEvent<HTMLSelectElement>) => {
+    const {value} = target;
+    setNextPage(1);
+    setCurrentFilters({...currentFilters, currentSorting: value});
+    const filters = {
+      genre: currentFilters.currentGenre === MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+          ? MOVIES_PAGE.DEFAULT_SELECT_VALUE 
+          : Number(currentFilters.currentGenre),
+      page: 1,
+      sortBy: value,
+    }
+    getMoviesByGenre(filters);
+  };
+
   
   return (
     <section className="movies-section mt-5">
       <div className="container">
-        <h2 className="mb-3">Explore Movies</h2>
+        <h2 className="mb-3">{MOVIES_PAGE.TITLE}</h2>
 
         <div className="mb-4 d-flex gap-3">
           <select
@@ -80,18 +109,22 @@ export const MoviesPage = () => {
             aria-label="Default select example"
             onChange={ onHandleGenre }
           >
-            <option defaultValue={""} value={'restart'}>Select Genres</option>
+            <option defaultValue={""} value={MOVIES_PAGE.DEFAULT_SELECT_VALUE}>
+              {MOVIES_PAGE.SELECT_GENRES}
+            </option>
             {
               genres && genres.map( ( genre: Genres ) => (
                 <option key={genre.name} value={ genre.id }>{genre.name}</option>
               ))
             }
           </select>
-          <select className="form-select bg-dark text-white w-50" aria-label="Default select example">
-            <option defaultValue={""} value={""}>Select Genres</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select className="form-select bg-dark text-white w-50" aria-label="Default select example" onChange={handleChangeSorting}>
+            <option defaultValue={""} value={MOVIES_PAGE.DEFAULT_SELECT_VALUE}>{MOVIES_PAGE.SORT_BY}</option>
+            {sortMoviesOptions.map((item, index) => (
+              <option value={item.value} key={index}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
 
