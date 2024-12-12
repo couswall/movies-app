@@ -1,11 +1,11 @@
-export interface TvShowsResponse {
+export interface ITvShowsByFiltersResponse {
     page:          number;
-    results:       ITvShows[];
+    results:       ITvShowsByFilters[];
     total_pages:   number;
     total_results: number;
 }
 
-export interface ITvShows {
+export interface ITvShowsByFilters {
     adult:             boolean;
     backdrop_path:     null | string;
     genre_ids:         number[];
@@ -15,16 +15,15 @@ export interface ITvShows {
     original_name:     string;
     overview:          string;
     popularity:        number;
-    poster_path:       string | null;
+    poster_path:       null | string;
     first_air_date:    string;
     name:              string;
     vote_average:      number;
     vote_count:        number;
 }
 
-export interface ITvShowsState {
-    tvResponse: TvShowsResponse
-    tvShows: ITvShows[];
+export interface ITvShowsByFiltersState {
+    tvShowsByFilters: ITvShowsByFilters[];
     isLoading: boolean;
     error: boolean;
 }
