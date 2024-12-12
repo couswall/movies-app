@@ -3,12 +3,18 @@ import { useTvShows } from "./hooks/useTvShows";
 import { ITvShows } from "../../store/tvShows/interfaces/tvShows.interfaces";
 import { Loading, MovieCard } from "../../ui/components";
 import { MediaType } from "../../interfaces";
+import { useFetch } from "../../hooks";
+import { urlWeb } from "../../constants/apiEndpoints";
+import { Genres } from "../interfaces/MoviesPage.interfaces";
 
 export const TVPage = () => {
   const {getTvShows, tvShows, isLoading} = useTvShows();
+  const {data: tvGenresData} = useFetch(urlWeb.tvShowsGenres);
   
   const [nextPage, setNextPage] = useState<number>(1);
   const [allTvShows, setAllTvShows] = useState<ITvShows[]>([]);
+
+  const {genres = []} = !!tvGenresData && tvGenresData;
 
   useEffect(() => {
     getTvShows(nextPage);
@@ -45,6 +51,9 @@ export const TVPage = () => {
             aria-label="Default select example"
           >
             <option value="">{'Select Genres'}</option>
+            {genres && genres.map((genre: Genres) => (
+              <option value={genre.id} key={genre.id}>{genre.name}</option>
+            ))}
           </select>
           <select 
             className="form-select bg-dark text-white w-50" 
