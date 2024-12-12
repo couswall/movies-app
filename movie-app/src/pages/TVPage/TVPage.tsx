@@ -17,6 +17,21 @@ export const TVPage = () => {
   useEffect(() => {
     setAllTvShows(tvShows);
   }, [tvShows]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolledTo = window.scrollY + window.innerHeight;
+      const isReachBottom = document.body.scrollHeight - 180 <= scrolledTo;
+      if (isReachBottom) {
+        setNextPage(prev => prev + 1);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
   
   return (
    <>
