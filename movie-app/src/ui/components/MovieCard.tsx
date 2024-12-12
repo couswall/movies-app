@@ -10,7 +10,7 @@ interface MovieCardProps {
   id: number;
   title?: string;
   name?: string;
-  poster_path: string;
+  poster_path: string | null;
   media_type: MediaType;
   release_date?: string;
   vote_average: number;

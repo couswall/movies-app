@@ -5,19 +5,59 @@ import { Loading, MovieCard } from "../../ui/components";
 import { MediaType } from "../../interfaces";
 import { useFetch } from "../../hooks";
 import { urlWeb } from "../../constants/apiEndpoints";
-import { Genres } from "../interfaces/MoviesPage.interfaces";
+import { Genres, ICurrentFilters } from "../interfaces/MoviesPage.interfaces";
+import { sortTvShowsOptions, TV_SHOWS_PAGE } from "../constants/TvShowsPage.constants";
+import { useTvShowsByFilters } from "./hooks/useTvShowsByFilters";
 
 export const TVPage = () => {
   const {getTvShows, tvShows, isLoading} = useTvShows();
   const {data: tvGenresData} = useFetch(urlWeb.tvShowsGenres);
+  const {getTvShowsByFilters, tvShowsByFilters, isLoading: tvShowsByFiltersLoading} = useTvShowsByFilters();
   
   const [nextPage, setNextPage] = useState<number>(1);
   const [allTvShows, setAllTvShows] = useState<ITvShows[]>([]);
+  const [currentFilters, setCurrentFilters] = useState<ICurrentFilters>({
+    currentGenre: TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE,
+    currentSorting: TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE,
+  });
 
   const {genres = []} = !!tvGenresData && tvGenresData;
 
+  const handleChangeGenres = ({target}: React.ChangeEvent<HTMLSelectElement>) => {
+    const {value} = target;
+    setCurrentFilters({...currentFilters, currentGenre: value});
+    setNextPage(1);
+    const filters = {
+      genre: value,
+      page: 1,
+      sortBy: currentFilters.currentSorting
+    }
+    getTvShowsByFilters(filters);
+  };
+
+  const handleChangeSorting = ({target}: React.ChangeEvent<HTMLSelectElement>) => {
+    const {value} = target;
+    setCurrentFilters({...currentFilters, currentSorting: value});
+    setNextPage(1);
+    const filters = {
+      genre: currentFilters.currentGenre,
+      page: 1,
+      sortBy: value,
+    };
+    getTvShowsByFilters(filters);
+  };
+
   useEffect(() => {
-    getTvShows(nextPage);
+    if (currentFilters.currentGenre === TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE && currentFilters.currentSorting === TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE) {
+      getTvShows(nextPage);
+    }else{
+      const filters = {
+        genre: currentFilters.currentGenre,
+        page: nextPage,
+        sortBy: currentFilters.currentSorting,
+      };
+      getTvShowsByFilters(filters);
+    }
   }, [nextPage]); 
 
   useEffect(() => {
@@ -38,19 +78,28 @@ export const TVPage = () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (tvShowsByFilters.length > 0) {
+      setAllTvShows(tvShowsByFilters);
+    }
+  }, [tvShowsByFilters]);
   
   return (
    <>
     <section className="tv-page-section mt-5">
       <div className="container">
-        <h2 className="mb-3">{'Explore TV Shows'}</h2>
+        <h2 className="mb-3">{TV_SHOWS_PAGE.TITLE}</h2>
 
         <div className="mb-4 d-flex gap-3">
           <select
             className="form-select bg-dark text-white w-50"
             aria-label="Default select example"
+            onChange={handleChangeGenres}
           >
-            <option value="">{'Select Genres'}</option>
+            <option value={TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE}>
+              {TV_SHOWS_PAGE.SELECT_GENRES}
+            </option>
             {genres && genres.map((genre: Genres) => (
               <option value={genre.id} key={genre.id}>{genre.name}</option>
             ))}
@@ -58,9 +107,14 @@ export const TVPage = () => {
           <select 
             className="form-select bg-dark text-white w-50" 
             aria-label="Default select example" 
-            // onChange={handleChangeSorting}
+            onChange={handleChangeSorting}
           >
-            <option defaultValue={""} value={''}>{'Sort by'}</option>
+            <option defaultValue={""} value={TV_SHOWS_PAGE.GENRES_DEFAULT_VALUE}>{TV_SHOWS_PAGE.SORT_BY}</option>
+            {sortTvShowsOptions.map((item, index) => (
+              <option key={index} value={item.value}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -78,7 +132,7 @@ export const TVPage = () => {
               />
             </div>
           ))}
-          {isLoading && <Loading/>}
+          {(isLoading || tvShowsByFiltersLoading) && <Loading/>}
         </div>
       </div>
     </section>
