@@ -1,5 +1,5 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { ErrorPage, HomePage, Layout, MovieView, MoviesPage, TVPage, TvSerieView } from "../pages";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom"
+import { ErrorPage, HomePage, Layout, MovieView, MoviesPage, SearchPage, TVPage, TvSerieView } from "../pages";
 
 
 const routesConfig = createBrowserRouter([
@@ -29,11 +29,14 @@ const routesConfig = createBrowserRouter([
                 path: 'tv-serie/:tvId',
                 element: <TvSerieView/>
             },
-
-            // {
-            //     path: '/*',
-            //     element: <Navigate to={'/'}/>
-            // }
+            {
+                path: 'search',
+                element: <SearchPage/>
+            },
+            {
+                path: '/*',
+                element: <Navigate to={'/'}/>
+            }
         ]
     }
 ]); 
