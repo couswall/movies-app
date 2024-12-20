@@ -1,5 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { moviesByGenreSlice, moviesSlice, tvShowsByFiltersSlice, tvShowsSlice, uiSlice } from './'
+import { 
+  mediaSearchSlice, 
+  moviesByGenreSlice,  
+  moviesSlice, 
+  tvShowsByFiltersSlice, 
+  tvShowsSlice, 
+  uiSlice 
+} from './';
 
 export const store = configureStore({
   reducer: {
@@ -8,6 +15,7 @@ export const store = configureStore({
     moviesByGenre: moviesByGenreSlice.reducer,
     tvShows: tvShowsSlice.reducer,
     tvShowsByFilters: tvShowsByFiltersSlice.reducer,
+    mediaSearch: mediaSearchSlice.reducer
   },
 })
 
