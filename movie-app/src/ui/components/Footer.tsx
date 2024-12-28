@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './styles/Footer.css';
+import { NAVBAR } from './constants';
 
 export const Footer = () => {
   return (
@@ -7,13 +8,13 @@ export const Footer = () => {
       <div className="container">
         <ul className="nav justify-content-center border-bottom pb-3 mb-3">
           <li className="nav-item">
-              <Link className="nav-link text-muted" to={'/'}>{'Home'}</Link>
+              <Link className="nav-link text-muted" to={'/'}>{NAVBAR.HOME}</Link>
           </li>
           <li className="nav-item">
-              <Link className="nav-link text-muted" to={'/movies'}>{'Movies'}</Link>
+              <Link className="nav-link text-muted" to={'/movies'}>{NAVBAR.MOVIES}</Link>
           </li>
           <li className="nav-item">
-              <Link className="nav-link text-muted" to={'/tv'}>{'TV Shows'}</Link>
+              <Link className="nav-link text-muted" to={'/tv'}>{NAVBAR.TV_SHOWS}</Link>
           </li>
         </ul>
         <p className="text-center text-muted">

@@ -16,5 +16,6 @@ export const MEDIA_TYPE = {
 
 export const MEDIA_TYPES_TITLES = {
     MOVIES: 'Movies',
-    TV_SERIES: 'TV Series'
+    TV_SERIES: 'TV Series',
+    SHOWS: 'Shows'
 }

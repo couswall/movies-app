@@ -4,8 +4,6 @@ import { store } from "./store/store"
 
 
 export const MovieApp = () => {
-
-    
   return (
     <>
         <Provider store={ store }>

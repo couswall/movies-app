@@ -4,11 +4,12 @@ import { useMemo } from "react";
 import { CiPlay1 } from "react-icons/ci";
 import NoPhoto from '/assets/no-poster.png'; 
 import '../styles/Details.css'; 
-import { CastCarousel, VideoPopUp,  } from ".";
+import { CastCarousel, Overview, VideoPopUp,  } from ".";
 import { CastSkeleton, DetailsSkeleton } from "../skeletons";
 import { useFetch } from "../../../hooks/useFetch";
 import { CastElement, MediaVideos } from "../../../interfaces";
 import { useUiStore } from "../../../hooks";
+import { ACTING, DIRECTOR, EMPTY_STRING, TRAILER, VIEW_TEXTS } from "../../constants/Views.constants";
 
 interface MediaDetailsProps {
     data: MovieDetails; 
@@ -27,11 +28,11 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
   const { crew = [], cast = [] } = !!crewData && crewData; 
   const { results = [] } = !!videoData && videoData; 
 
-  const trailer = results.filter( video => video.type === 'Trailer'); 
+  const trailer = results.filter( video => video.type === TRAILER); 
   
   
-  const director: CastElement | undefined = crew.find( (person:CastElement) => person.job === 'Director'); 
-  const castArray: CastElement[] = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
+  const director: CastElement | undefined = crew.find( (person:CastElement) => person.job === DIRECTOR); 
+  const castArray: CastElement[] = cast.filter( (person:CastElement) => person.known_for_department === ACTING); 
   
     const {
         title, 
@@ -137,20 +138,18 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                                 className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
                                 <CiPlay1 className="icon"/>
                               </div>
-                              <span>Watch trailer</span>
+                              <span>{VIEW_TEXTS.WATCH_TRAILER}</span>
                             </div>
                           )}
                         
                         </div>
 
                         <div>
-                          <h5>Overview</h5>
-                          <p className="overview">{ overview }</p>
-
+                          {(overview !== EMPTY_STRING) && <Overview overview={overview}/>}
                           <div className="d-flex gap-3">
-                              <p>Status: <span className="fw-lighter">{ status }</span></p>
-                              <p>Release Date: <span className="fw-lighter">{ relaseDate }</span></p>
-                              <p>Runtime: <span className="fw-lighter">{ runTimeToHours } </span></p>
+                              <p>{VIEW_TEXTS.STATUS} <span className="fw-lighter">{ status }</span></p>
+                              <p>{VIEW_TEXTS.RELEASE_DATE} <span className="fw-lighter">{ relaseDate }</span></p>
+                              <p>{VIEW_TEXTS.RUNTIME} <span className="fw-lighter">{ runTimeToHours } </span></p>
                           </div>
                         </div>
                         <hr />

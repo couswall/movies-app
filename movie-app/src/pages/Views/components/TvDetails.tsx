@@ -10,6 +10,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import { CastCarousel, VideoPopUp } from ".";
 import { useUiStore } from "../../../hooks";
 import { Overview } from "./Overview";
+import { ACTING, EMPTY_STRING, TRAILER, VIEW_TEXTS } from "../../constants/Views.constants";
 
 interface TvDetailsProps {
     data: TvSerieIndividual,
@@ -43,15 +44,15 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, tvId, vide
     
 
     const posterUrl = poster_path ? 'https://image.tmdb.org/t/p/original/' + poster_path : NoPhoto;
-    const trailer = results.filter( video => video.type === 'Trailer');
-    const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
+    const trailer = results.filter( video => video.type === TRAILER);
+    const castArray = cast.filter( (person:CastElement) => person.known_for_department === ACTING); 
     
     const realseYear = useMemo( () => {
         if(data){
             const arrayDate = first_air_date.split("-");
             return arrayDate[0]; 
         }
-        return ''
+        return EMPTY_STRING;
     }, [ tvId, isLoading ]); 
 
     const relaseDate = useMemo( () => {
@@ -144,23 +145,20 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, tvId, vide
                                             className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
                                             onClick={ () => onWatchTrailer( trailer[0]?.key ) }
                                         >
-                                            <div 
-                                            className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
-                                            <CiPlay1 className="icon"/>
+                                            <div className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                                                <CiPlay1 className="icon"/>
                                             </div>
-                                            <span>Watch trailer</span>
+                                            <span>{VIEW_TEXTS.WATCH_TRAILER}</span>
                                         </div>
                                     )}
                                 </div>
 
                                 <div>
-                                    {
-                                        (overview !== '') && <Overview overview={overview}/>
-                                    }
+                                    {(overview !== EMPTY_STRING) && <Overview overview={overview}/>}
                                     <div className="d-flex gap-3">
-                                        <p>Status: <span className="fw-lighter">{ status }</span></p>
-                                        <p>Release Date: <span className="fw-lighter">{ relaseDate }</span></p>
-                                        <p>Runtime: <span className="fw-lighter">{ runTime } </span></p>
+                                        <p>{VIEW_TEXTS.STATUS} <span className="fw-lighter">{ status }</span></p>
+                                        <p>{VIEW_TEXTS.RELEASE_DATE} <span className="fw-lighter">{ relaseDate }</span></p>
+                                        <p>{VIEW_TEXTS.RUNTIME} <span className="fw-lighter">{ runTime } </span></p>
                                     </div>
                                     <hr />
                                     <div className="d-flex gap-3">
