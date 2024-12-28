@@ -4,3 +4,4 @@ export * from './Carousel';
 export * from './MovieCard';
 export * from './Loading';
 export * from './SearchInput';
+export * from './Footer';
