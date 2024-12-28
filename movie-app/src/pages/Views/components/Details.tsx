@@ -29,9 +29,9 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
 
   const trailer = results.filter( video => video.type === 'Trailer'); 
   
-
-  const director = crew.find( (person:CastElement) => person.job === 'Director'); 
-  const castArray = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
+  
+  const director: CastElement | undefined = crew.find( (person:CastElement) => person.job === 'Director'); 
+  const castArray: CastElement[] = cast.filter( (person:CastElement) => person.known_for_department === 'Acting'); 
   
     const {
         title, 
@@ -43,7 +43,8 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
         tagline, 
         poster_path, 
         vote_average,
-        backdrop_path, genres
+        backdrop_path, 
+        genres = []
       } = !!data && data;
 
 
@@ -68,7 +69,7 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
       return `${hours}h ${minutes}min`
       }, [ movieId, isLoading ])
       
-      const realseYear = useMemo( () => {
+    const realseYear = useMemo( () => {
       const arrayDate = relaseDate.split(",");
       return arrayDate[ arrayDate.length - 1 ]; 
 
@@ -127,16 +128,18 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                           <div className= "circle-details p-3 d-flex justify-content-center align-items-center">
                             <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
                           </div>
-                          <div 
-                            className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
-                            onClick={ () => onWatchTrailer() }
-                          >
+                          {trailer.length !== 0 && (
                             <div 
-                              className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
-                              <CiPlay1 className="icon"/>
+                              className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
+                              onClick={ () => onWatchTrailer() }
+                            >
+                              <div 
+                                className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                                <CiPlay1 className="icon"/>
+                              </div>
+                              <span>Watch trailer</span>
                             </div>
-                            <span>Watch trailer</span>
-                          </div>
+                          )}
                         
                         </div>
 
@@ -153,14 +156,16 @@ export const Details: React.FC<MediaDetailsProps> = ({ data, isLoading, movieId,
                         <hr />
                         
                         {
-                          ( isCastLoading ) ? <></> : <p>Director: <span className="fw-lighter">{ director.name }</span></p>
+                          ( isCastLoading ) ? <></> : <p>Director: <span className="fw-lighter">{ director?.name || 'Unknown' }</span></p>
                         }
                         <hr />  
                       </div>
                     </div>  
                     {
-                      ( isCastLoading ) ? <CastSkeleton/> : <CastCarousel castArray= { castArray }/>
-                    }  
+                        ( isCastLoading )
+                            ? <CastSkeleton/>
+                            : castArray.length > 0 && <CastCarousel castArray={ castArray }/>
+                    } 
                       
               </div>
               

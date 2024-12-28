@@ -139,16 +139,18 @@ export const TvDetails: React.FC<TvDetailsProps> = ({data, isLoading, tvId, vide
                                     <div className= "circle-details p-3 d-flex justify-content-center align-items-center">
                                         <span className='text-white fs-3'>{ (vote_average).toFixed(1) }</span>
                                     </div>
-                                    <div 
-                                        className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
-                                        onClick={ () => onWatchTrailer( trailer[0]?.key ) }
-                                    >
+                                    {trailer.length !== 0 && (
                                         <div 
-                                        className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
-                                        <CiPlay1 className="icon"/>
+                                            className="d-flex justify-content-center align-items-center gap-3 button-trailer-container text-white"
+                                            onClick={ () => onWatchTrailer( trailer[0]?.key ) }
+                                        >
+                                            <div 
+                                            className= "p-3 play-trailer-button circle-details d-flex justify-content-center align-items-center">
+                                            <CiPlay1 className="icon"/>
+                                            </div>
+                                            <span>Watch trailer</span>
                                         </div>
-                                        <span>Watch trailer</span>
-                                    </div>
+                                    )}
                                 </div>
 
                                 <div>

@@ -17,7 +17,7 @@ export const CastCarousel: React.FC<CastCarouselProps> = ({castArray}) => {
         <h3>Cast</h3>            
         <div className="carousel-wrapper mt-4">
           <Swiper
-            loop= { true }
+            loop= { castArray.length > 2 }
             slidesPerView={3}
             spaceBetween={10}
             autoplay= {{
