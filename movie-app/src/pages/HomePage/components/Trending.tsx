@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useFetch } from "../../../hooks/useFetch";
 import { Carousel } from "../../../ui/components/Carousel";
 import { Loading } from "../../../ui/components";
+import { TRENDING } from "../../constants/HomePage.constants";
 
 export const Trending = () => {
 
-    const [ timeFilter, setTimeFilter ] = useState("day");
+    const [ timeFilter, setTimeFilter ] = useState(TRENDING.FILTER_TIME_DAY);
     const url: string = `https://api.themoviedb.org/3/trending/all/${timeFilter}`;
     
     const { data, isLoading } = useFetch( url );
@@ -14,7 +15,7 @@ export const Trending = () => {
   return (
     <section className="carousel-section mb-5">
         <div className="container">
-          <h3 className="text-white">Trending</h3>
+          <h3 className="text-white">{TRENDING.TITLE}</h3>
 
           <div className="form-check form-switch d-flex justify-content-end">
             <input 
@@ -22,11 +23,15 @@ export const Trending = () => {
                 type="checkbox" 
                 role="switch" 
                 id="flexSwitchCheckDefault"
-                onChange={() => ( timeFilter === 'day' ) ? setTimeFilter('week') : setTimeFilter('day') }
+                onChange={() => ( timeFilter === TRENDING.FILTER_TIME_DAY ) ? setTimeFilter(TRENDING.FILTER_TIME_WEEK) : setTimeFilter(TRENDING.FILTER_TIME_DAY) }
             />
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                <span className={`text-secondary ${( timeFilter === 'day') ? 'text-white' : ''}`}>Day</span>/
-                <span className={`text-secondary ${( timeFilter === 'week') ? 'text-white' : ''}`}>Week</span>
+                <span className={`text-secondary ${( timeFilter === TRENDING.FILTER_TIME_DAY) ? 'text-white' : ''}`}>
+                  {TRENDING.DAY_TITLE}
+                </span>/
+                <span className={`text-secondary ${( timeFilter === TRENDING.FILTER_TIME_WEEK) ? 'text-white' : ''}`}>
+                  {TRENDING.WEEK_TITLE}
+                </span>
             </label>
           </div>
 
