@@ -25,19 +25,19 @@ export const useFetch = ( url: string, page: string = ''): FetchResult => {
         
         try {
             const resp = await fetch( url + `?api_key=${TMBD_TOKEN}` + page );
-            const data = await resp.json();
-            
-            // console.log(data);
+            const data = await resp.json();            
+
+            if(data.success === false) throw new Error(data.status_message);
+
             setIsState({
                 data, 
                 isLoading: false,
                 hasError: null,
             });
-            
         } catch (error) {
-           
             setIsState({
                 ...isState,
+                isLoading: false,
                 hasError: error instanceof Error ? error.message : String(error)
             })
         }
@@ -46,9 +46,7 @@ export const useFetch = ( url: string, page: string = ''): FetchResult => {
     }
 
     useEffect(()=> {
-     
         getFetch();
-    
     }, [ url, page ]);
 
     return{

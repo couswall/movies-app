@@ -5,10 +5,9 @@ import { useFetch } from "../../hooks/";
 import { MEDIA_TYPE, MEDIA_TYPES_TITLES } from "../constants/HomePage.constants";
 
 export const MovieView = () => {
-
   const { movieId = '' } = useParams(); 
 
-  const { data, isLoading } = getMediaById(MEDIA_TYPE.MOVIE, movieId ); 
+  const { data, isLoading } = getMediaById(MEDIA_TYPE.MOVIE, movieId );
   const { data: videoData, isLoading: isLoadingVideos } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
   const { data: similarMedia, isLoading: isLoadingSimilar } = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/similar`);
   const { data: recommendedMedia, isLoading: isLoadingRecommended} = useFetch(`https://api.themoviedb.org/3/movie/${movieId}/recommendations`);

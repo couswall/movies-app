@@ -26,3 +26,21 @@ nav, footer {
 .cursor-pointer{
     cursor: pointer;
 }
+
+.error-section {
+    height: 80vh;
+}
+
+.error-image{
+    width: 350px;
+}
+
+.error-title{
+    letter-spacing: 2px;
+}
+
+@media (max-width: 767.98px) {
+    .error-image{
+        width: 250px;
+    }
+}

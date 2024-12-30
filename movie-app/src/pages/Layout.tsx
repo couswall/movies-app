@@ -4,6 +4,7 @@ import { Footer, Navbar } from "../ui/components"
 export const Layout = () => {
   return (
     <>
+      <div className="d-flex flex-column min-vh-100">
         <Navbar/>
         
         <main>
@@ -11,6 +12,7 @@ export const Layout = () => {
         </main>
 
         <Footer/>
+      </div>
     </>
   )
 }

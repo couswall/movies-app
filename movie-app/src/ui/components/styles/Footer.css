@@ -1,3 +1,6 @@
+.footer-section {
+    flex-grow: 1;
+}
 .footer-section .nav .nav-link:hover{
     color: #fff !important;
 }
