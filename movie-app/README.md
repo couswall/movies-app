@@ -1,30 +1,24 @@
-# React + TypeScript + Vite
+# MovieApp Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MovieApp is a React application that provides detailed information about movies and TV shows, including trailers, similar movies, and recommendations. It fetches data from The Movie Database (TMDB) API.
 
-Currently, two official plugins are available:
+## Features
+- Fetch and display movie and TV show details.
+- View similar movies and recommendations.
+- Responsive design.
+- Search movies and TV shows.
+- Filter movies and TV shows by genre.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- React
+- React Router
+- Redux Toolkit
+- TMDB API
+- TypeScript
+- Bootstrap
+- CSS Modules
 
-## Expanding the ESLint configuration
+## Usage
+- Ensure you have an API key from TMBD.
+- Create a `.env` file in the root directory and add your API key.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
